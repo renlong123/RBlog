@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: renlong
@@ -11,6 +12,18 @@
     <title>haha</title>
 </head>
 <body>
-    ${myname}
+    <table>
+        <c:forEach items="${list}" var="useri">
+            <tr>
+                <td>${useri.userId}</td>
+                <td>${useri.userNikename}</td>
+                <td>${useri.userDescription}</td>
+                <td>${useri.userEmail}</td>
+                <td>${useri.userPassword}</td>
+                <td>${useri.userGender==1?"男":"女"}</td>
+            </tr>
+        </c:forEach>
+    </table>
+
 </body>
 </html>
