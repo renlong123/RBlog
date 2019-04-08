@@ -23,4 +23,10 @@ public class TestController {
         mav.addObject("list",list);
         return mav;
     }
+
+    @RequestMapping("/person")
+    public ModelAndView person(){
+        ModelAndView mav = new ModelAndView("person_info");
+        return mav;
+    }
 }
