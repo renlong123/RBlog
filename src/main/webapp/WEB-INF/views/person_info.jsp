@@ -16,6 +16,19 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.2.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
    <%-- <link href="https://v4.bootcss.com/docs/4.0/examples/dashboard/dashboard.css" rel="stylesheet">--%>
+
+    <!--添加ueditor-->
+    <script type="text/javascript">
+        window.UEDITOR_HOME_URL = "${pageContext.request.contextPath}/utf8-jsp/";
+    </script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath }/utf8-jsp/ueditor.config.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath }/utf8-jsp/ueditor.all.js"></script>
+<%--    <script type="text/javascript"
+            src="${pageContext.request.contextPath }/js/zh-cn.js"></script>--%>
+
+
     <style>
         body{
             padding-top: 70px;
@@ -57,7 +70,7 @@
 
             <main role="main" class="col-md-10 content-float">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard</h1>
+                    <%--<h1 class="h2">Dashboard</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
                             <button class="btn btn-sm btn-outline-secondary">Share</button>
@@ -67,53 +80,38 @@
                             <span data-feather="calendar"></span>
                             This week
                         </button>
-                    </div>
+                    </div>--%>
+                    <ol class="breadcrumb">
+                        <li><a href="#">前端技术</a></li>
+                        <li><a href="#">BootStrap </a></li>
+                        <li class="active">BootStrap 面包屑导航 </li>
+                    </ol>
                     <div>
-                        <table>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
-                            <tr>
-                                <td>vldfnvjf</td>
-                            </tr>
 
-                        </table>
+                        <script id="container" name="content" type="text/plain"></script>
+                        <script>
+                           var ue = UE.getEditor('container');
+
+                           function getContent(){
+                               var content = ue.getContent();
+                               console.log(content);
+                               $.ajax({
+                                   url:"${pageContext.request.contextPath}/test",
+                                   type:"POST",
+                                   data:{
+                                       "content":content
+                                   },
+                                   success:function () {
+                                       alert("chenggong");
+                                   },
+                                   error:function(){
+                                       alert("error");
+                                   }
+                               });
+                           }
+                        </script>
+                        <button class="btn btn-success" onclick="getContent()">获取内容</button>
+
                     </div>
                 </div>
 

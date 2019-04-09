@@ -112,6 +112,20 @@
       <version>RELEASE</version>
       <scope>compile</scope>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.gitee.qdbp.thirdparty/ueditor -->
+    <dependency>
+      <groupId>com.gitee.qdbp.thirdparty</groupId>
+      <artifactId>ueditor</artifactId>
+      <version>1.4.3.3</version>
+    </dependency>
+
+      <dependency>
+          <groupId>com.nativeueditor</groupId>
+          <artifactId>ueditor</artifactId>
+        <version>1.0</version>
+      </dependency>
+
   </dependencies>
 
   <build>
