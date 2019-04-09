@@ -40,6 +40,9 @@
         .content-float{
             float: right;
         }
+        .input-group{
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -87,22 +90,59 @@
                         <li class="active">BootStrap 面包屑导航 </li>
                     </ol>
                     <div>
+                        <form action="action1" method="post" class="form-horizontal">
+                            <div class="input-group">
+                                <span class="input-group-addon">标题</span>
+                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="articleTitle" placeholder="请输入标题">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                    <span class="input-group-addon">类别</span>
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="articleCategoryid" placeholder="请输入分类">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <%--<div class="panel panel-default">--%>
+                                    <span class="col-lg-2 control-label">是否公开</span>
+                                    <%--col-sm-2 control-label--%>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="isPublic" id="inlineRadio1" value="yes"> 是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="isPublic" id="inlineRadio2" value="no"> 否
+                                    </label>
+                                   <%-- </div>--%>
+                                </div>
 
-                        <script id="container" name="content" type="text/plain"></script>
+                            </div>
+
+                            <%--默认内容--%>
+                            <script id="container" name="articleContent" type="text/plain">欢迎来到RBlog!
+                               <br/>现在开始写博客吧！
+                            </script>
+                            <input type="submit" class="btn btn-success" value="发帖">
+                        </form>
+                        <button class="btn btn-success" onclick="getContent()">获取内容</button>
+
                         <script>
                            var ue = UE.getEditor('container');
 
                            function getContent(){
                                var content = ue.getContent();
-                               console.log(content);
+
                                $.ajax({
-                                   url:"${pageContext.request.contextPath}/test",
+                                   url:"${pageContext.request.contextPath}/action1",
                                    type:"POST",
-                                   data:{
-                                       "content":content
-                                   },
-                                   success:function () {
+                                   data:
+                                       "articleTitle="+$('articleTitle').value+
+                                       "&articleCategoryid=2"/*+parseInt($('articleCategoryid').value)*/+
+                                       /*"&isPublic="+$('isPublic').value=="yes"?"是":"否"+*/
+                                       "&articleContent="+content
+                                   ,
+                                   success:function (mes) {
                                        alert("chenggong");
+                                       console.log(mes);
                                    },
                                    error:function(){
                                        alert("error");
@@ -110,7 +150,7 @@
                                });
                            }
                         </script>
-                        <button class="btn btn-success" onclick="getContent()">获取内容</button>
+
 
                     </div>
                 </div>
