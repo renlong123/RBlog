@@ -93,13 +93,13 @@
                         <form action="action1" method="post" class="form-horizontal">
                             <div class="input-group">
                                 <span class="input-group-addon">标题</span>
-                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="articleTitle" placeholder="请输入标题">
+                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="articleTitle" id="articleTitle" placeholder="请输入标题">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="input-group">
                                     <span class="input-group-addon">类别</span>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="articleCategoryid" placeholder="请输入分类">
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="articleCategoryid" id="articleCategoryid" placeholder="请输入分类">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -124,21 +124,45 @@
                             <input type="submit" class="btn btn-success" value="发帖">
                         </form>
                         <button class="btn btn-success" onclick="getContent()">获取内容</button>
+                        <button class="btn btn-success" onclick="saveContent()">保存内容</button>
 
                         <script>
                            var ue = UE.getEditor('container');
-
                            function getContent(){
                                var content = ue.getContent();
-
+                               console.log(content.toString());
                                $.ajax({
                                    url:"${pageContext.request.contextPath}/action1",
                                    type:"POST",
-                                   data:
-                                       "articleTitle="+$('articleTitle').value+
-                                       "&articleCategoryid=2"/*+parseInt($('articleCategoryid').value)*/+
+                                   data: {
+                                       "articleTitle": $('#articleTitle').val(),
+                                       "articleCategoryid": parseInt($('#articleCategoryid').val()),
                                        /*"&isPublic="+$('isPublic').value=="yes"?"是":"否"+*/
-                                       "&articleContent="+content
+                                       "articleContent": content
+                                   }
+                                   ,
+                                   success:function (mes) {
+                                       alert("chenggong");
+                                       console.log(mes);
+                                   },
+                                   error:function(){
+                                       alert("error");
+                                   }
+                               });
+                           }
+
+                           function saveContent(){
+                               var content = ue.getContent();
+                               console.log(content.toString());
+                               $.ajax({
+                                   url:"${pageContext.request.contextPath}/article",
+                                   type:"POST",
+                                   data: {
+                                       "articleTitle": $('#articleTitle').val(),
+                                       "articleCategoryid": parseInt($('#articleCategoryid').val()),
+                                       /*"&isPublic="+$('isPublic').value=="yes"?"是":"否"+*/
+                                       "articleContent": content
+                                   }
                                    ,
                                    success:function (mes) {
                                        alert("chenggong");
@@ -150,12 +174,8 @@
                                });
                            }
                         </script>
-
-
                     </div>
                 </div>
-
             </main>
-
 </body>
 </html>

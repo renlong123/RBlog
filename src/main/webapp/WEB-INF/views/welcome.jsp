@@ -12,11 +12,31 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.2.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <%--    <%@include file="WEB-INF/views/header.jsp"%>--%>
+    <script>
+        $(function(){
+            addArticle();
+        });
+
+        function addArticle() {
+            var content = '${article.articleContent}'.toString();
+            var content_text=$("#content-area");
+            var title = $("<span></span>").addClass("content-title").append($("<a href='#'></a>").append('${article.articleTitle}'));
+            var author = $("<span></span>").addClass("content-info").append("作者：").append($("<a href='#'></a>").append("任龙"));
+            var time = $("<span></span>").append("发表日期："+'${article.articleLastmodify}');
+            var content1 = $("<div></div>").addClass("content-body").append(content);
+
+            content_text
+                .append(title).append($("<br/>"))
+                .append(author)
+                .append(time)
+                .append(content1);
+        }
+    </script>
 </head>
 <body>
 
 
-    <jsp:include page="WEB-INF/views/navigate.jsp"></jsp:include>
+    <jsp:include page="navigate.jsp"></jsp:include>
     <!--轮播图-->
     <style>
         div.item img{
@@ -70,22 +90,26 @@
     <!--欢迎页面-->
     <div class="row" style="margin: 25px">
         <div class="col-lg-4">
-            <div class="panel panel-success" style="margin: 5px;height: 400px">
+            <div class="panel panel-success" style="margin: 5px;">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                    最新文章${article.articleTitle}
+                    最新文章
                 </div>
                 <div class="panel-body" id="content-area">
 
-                    <span class="content-title"><a href="#">${article.articleTitle}</a> </span><br/>
+                    <span class="content-title"><a href="#"></a> </span><br/>
                     <span class="content-info" style="font-size: 12px">作者：<a href="#">任龙</a></span>  <span style="float: right;font-size: 12px" >发表日期：3s 前</span>
-                    <div class="content-body">简写属性在一个声明中设置所有外边距属性。该属性可以有 1 到 4 个值。 说明 这个简写属性设置一个元素所有外边距的宽度,或者设置各边上外边距</div>
+                    <div class="content-body" id="111111"></div>
                     <!--分割线-->
                     <HR>
                     <span class="content-title"><a href="#">java泛型详解</a> </span><br>
                     <span class="content-info" style="font-size: 12px">作者：<a href="#">任龙</a></span>  <span style="float: right;font-size: 12px" >发表日期：1分钟 前</span>
                     <div class="content-body">简写属性在一个声明中设置所有外边距属性。该属性可以有 1 到 4 个值。 说明 这个简写属性设置一个元素所有外边距的宽度,或者设置各边上外边距</div>
-
+                    <c:forEach items="${articles}" var="article">
+                        <span class="content-title"><a href="#">${article.articleTitle}</a> </span><br/>
+                        <span class="content-info" style="font-size: 12px">作者：<a href="#">${article.articleUserid}</a></span>  <span style="float: right;font-size: 12px" >发表日期：${article.articleLastmodify}</span>
+                        <div class="content-body" id="111111">${article.articleContent}</div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -118,29 +142,7 @@
         </div>
     </div>
 
-    <script type="text/javascript" charset="UTF-8">
-        $(function () {
-            addArticle();
-        });
 
-
-
-        function addArticle() {
-            /*var state = ;
-            alert(state);*/
-            var content_text=$("#content-area");
-            var title = $("<span></span>").addClass("content-title").append($("<a href='#'></a>").append(article.articleTitle));
-            var author = $("<span></span>").addClass("content-info").append("作者：").append($("<a href='#'></a>").append("任龙"));
-            var time = $("<span></span>").append("发表日期："+article.articleLastmodify);
-            var content = $("<div></div>").addClass("content-body").append(article.articleContent);
-            content_text.append(title)
-                .append(author)
-                .append(time)
-                .append(content);
-        }
-
-
-    </script>
 
 </body>
 </html>

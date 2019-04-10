@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -45,13 +47,20 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping(value="/action1",method = RequestMethod.POST)
-    public String testSubmit(Article article){
+    public ModelAndView testSubmit(Article article){
         //System.out.println("1kfnvfdsnfj");
-       // ModelAndView mav = new ModelAndView("redirect:welcome.jsp");
+        ModelAndView mav = new ModelAndView("welcome");
 
+        Date now = new Date();
+        article.setArticleCreatedate(now);
+        article.setArticleLastmodify(now);
+        article.setArticleUserid(1);
+        System.out.println();
+        List<Article> articles = new ArrayList<>();
+        articles.add(article);
+        mav.addObject("articles",articles);
+        System.out.println(articles);
 
-        System.out.println(article);
-
-        return "1";
+        return mav;
     }
 }
