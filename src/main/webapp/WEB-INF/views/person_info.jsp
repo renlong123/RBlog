@@ -43,6 +43,13 @@
         .input-group{
             margin-bottom: 5px;
         }
+        .item-content{
+            font-size: 20px;
+        }
+        .isChecked{
+            background-color: #5f2dab;
+            font-color: white;
+        }
     </style>
 </head>
 <body>
@@ -54,22 +61,47 @@
         <div class="row">
 <%--            <link href="https://v4.bootcss.com/docs/4.0/examples/dashboard/dashboard.css" rel="stylesheet">--%>
             <nav class="col-md-2 sidebar">
+
                 <div class="panel panel-success">
                     <div class="panel-heading" style="text-align: center">个人信息</div>
-                    <div class="panel-body">
-                        <ul class="items-group">
-                            <li class="item-content"><a href="#">我的信息</a></li>
+                    <div class="panel-body" style="margin: 0px">
+                        <%--<ul class="items-group">--%>
+                            <div class="item-content isChecked">
+                                <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span>
+                                <a href="#">我的信息</a></div>
                             <div></div>
-                            <li class="item-content"><a href="#">我的信息</a></li>
+                            <div class="item-content ">
+                                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                                <a href="${pageContext.request.contextPath}/article">文章列表</a></div>
+                            <div></div>
+                            <%--<li class="item-content"><a href="#">我的信息</a></li>
                             <div></div>
                             <li class="item-content"><a href="#">我的信息</a></li>
                             <hr/>
                             <li class="item-content"><a href="#">我的信息</a></li>
-                            <li class="item-content"><a href="#">我的信息</a></li>
-                        </ul>
+                            <li class="item-content"><a href="#">我的信息</a></li>--%>
+                        <%--</ul>--%>
                     </div>
                 </div>
             </nav>
+<%--            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span data-feather="home"></span>
+                                Dashboard <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file"></span>
+                                Orders
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>--%>
 
             <main role="main" class="col-md-10 content-float">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
