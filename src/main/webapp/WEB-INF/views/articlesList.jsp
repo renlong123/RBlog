@@ -3,10 +3,12 @@
   User: renlong
   Date: 2019/4/8
   Time: 22:09
+  作用是为了展示所有文章
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -118,12 +120,11 @@
                     </button>
                 </div>--%>
                 <ol class="breadcrumb">
-                    <li><a href="#">前端技术</a></li>
-                    <li><a href="#">BootStrap </a></li>
-                    <li class="active">BootStrap 面包屑导航 </li>
+                    <li><a href="#">个人信息</a></li>
+                    <li class="active">所有博客</li>
                 </ol>
                 <div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-10">
                         <div class="panel panel-success" style="margin: 5px;">
                             <div class="panel-heading">
                                 <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
@@ -131,9 +132,12 @@
                             </div>
                             <div class="panel-body" id="content-area">
                                 <c:forEach items="${articles}" var="article">
-                                    <span class="content-title"><a href="#">${article.articleTitle}</a> </span><br/>
-                                    <span class="content-info" style="font-size: 12px">作者：<a href="#">${article.articleUserid}</a></span>  <span style="float: right;font-size: 12px" >发表日期：${article.articleLastmodify}</span>
-                                    <div class="content-body" id="111111">${article.articleContent}</div>
+                                    <span class="content-title"><a href="${pageContext.request.contextPath}/oneArticle?articleId=${article.articleId}">${article.articleTitle}</a> </span>
+                                    <span style="float: right" ><a href="${pageContext.request.contextPath}/oneArticle?articleId=${article.articleId}" >编辑</a></span><br/>
+
+                                    <span class="content-info" style="font-size: 12px">作者：<a href="#">${article.articleUserid}</a></span>
+                                    <span style="float: right;font-size: 12px" >发表日期：<fmt:formatDate value="${article.articleLastmodify}" pattern="yyyy-MM-dd"/></span>
+                                    <div class="content-body" id="111111">${article.articleSubContent}</div>
                                     <hr/>
                                 </c:forEach>
                             </div>
@@ -142,5 +146,7 @@
                 </div>
             </div>
         </main>
+    </div>
+</div>
 </body>
 </html>

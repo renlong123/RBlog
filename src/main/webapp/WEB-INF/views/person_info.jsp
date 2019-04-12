@@ -150,8 +150,7 @@
                             </div>
 
                             <%--默认内容--%>
-                            <script id="container" name="articleContent" type="text/plain">欢迎来到RBlog!
-                               <br/>现在开始写博客吧！
+                            <script id="container" name="articleContent" type="text/plain">
                             </script>
                             <input type="submit" class="btn btn-success" value="发帖">
                         </form>
@@ -159,7 +158,11 @@
                         <button class="btn btn-success" onclick="saveContent()">保存内容</button>
 
                         <script>
-                           var ue = UE.getEditor('container');
+                           var ue = UE.getEditor('container',{
+                               initialFrameHeight:400
+                           });
+
+
                            function getContent(){
                                var content = ue.getContent();
                                console.log(content.toString());

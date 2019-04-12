@@ -30,6 +30,8 @@ public class ArticleController {
         article.setArticleCreatedate(now);
         article.setArticleLastmodify(now);
         article.setArticleUserid(1);
+        String subString = article.getArticleContent().substring(0,100).replaceAll("<","").trim();
+        article.setarticleSubContent(subString);
         int result = articleService.saveArticleSelective(article);
         return result==1?"success":"fail";
     }
@@ -44,6 +46,24 @@ public class ArticleController {
         ModelAndView mav = new ModelAndView("articlesList");
         List<Article> articles = articleService.selectAll();
         mav.addObject("articles",articles);
+        return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/oneArticle",method = RequestMethod.GET)
+    public ModelAndView selectOneSelect(Integer articleId){
+        ModelAndView mav = new ModelAndView("articleDisplay");
+        Article article = articleService.selectByPrimaryKey(articleId);
+        mav.addObject("article",article);
+        return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/oneArticle",method = RequestMethod.PUT)
+    public ModelAndView selectOneEdit(Integer articleId){
+        ModelAndView mav = new ModelAndView("articleEdit");
+        Article article = articleService.selectByPrimaryKey(articleId);
+        mav.addObject("article",article);
         return mav;
     }
 

@@ -23,7 +23,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> selectAll() {
         ArticleExample example = new ArticleExample();
-        return articleMapper.selectByExampleWithBLOBs(example);
+        return articleMapper.selectByExample(example);
+    }
+
+    @Override
+    public Article selectByPrimaryKey(Integer articleId) {
+        return articleMapper.selectByPrimaryKey(articleId);
     }
 
 }

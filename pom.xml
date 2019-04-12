@@ -113,18 +113,42 @@
       <scope>compile</scope>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/com.gitee.qdbp.thirdparty/ueditor -->
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/com.gitee.qdbp.thirdparty/ueditor &ndash;&gt;
     <dependency>
       <groupId>com.gitee.qdbp.thirdparty</groupId>
       <artifactId>ueditor</artifactId>
       <version>1.4.3.3</version>
-    </dependency>
+    </dependency>-->
 
       <dependency>
           <groupId>com.nativeueditor</groupId>
           <artifactId>ueditor</artifactId>
         <version>1.0</version>
       </dependency>
+
+      <dependency>
+          <groupId>com.nativeueditor</groupId>
+          <artifactId>codec</artifactId>
+        <version>1.0</version>
+      </dependency>
+
+    <dependency>
+      <groupId>com.nativeueditor</groupId>
+      <artifactId>fileupload</artifactId>
+      <version>1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.nativeueditor</groupId>
+      <artifactId>io</artifactId>
+      <version>1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.nativeueditor</groupId>
+      <artifactId>json</artifactId>
+      <version>1.0</version>
+    </dependency>
 
   </dependencies>
 

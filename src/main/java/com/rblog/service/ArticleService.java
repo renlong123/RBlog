@@ -10,4 +10,6 @@ public interface ArticleService {
     public int saveArticleSelective(Article article);
 
     List<Article> selectAll();
+
+    Article selectByPrimaryKey(Integer articleId);
 }

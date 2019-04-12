@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rblog.dao.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.rblog.bean.Article">
+    <id column="article_id" jdbcType="INTEGER" property="articleId" />
+    <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
+    <result column="article_createdate" jdbcType="DATE" property="articleCreatedate" />
+    <result column="article_lastmodify" jdbcType="DATE" property="articleLastmodify" />
+    <result column="article_userid" jdbcType="INTEGER" property="articleUserid" />
+    <result column="article_categoryid" jdbcType="INTEGER" property="articleCategoryid" />
+    <result column="article_subContent" jdbcType="VARCHAR" property="articleSubContent" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.rblog.bean.Article">
+    <result column="article_content" jdbcType="LONGVARCHAR" property="articleContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    article_id, article_title, article_createdate, article_lastmodify, article_userid, 
+    article_categoryid,article_subContent
+  </sql>
+  <sql id="Blob_Column_List">
+    article_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.rblog.bean.ArticleExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.rblog.bean.ArticleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from article_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article_info
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from article_info
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.rblog.bean.ArticleExample">
+    delete from article_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.rblog.bean.Article">
+    insert into article_info (article_id, article_title, article_createdate, 
+      article_lastmodify, article_userid, article_categoryid, 
+      article_content,article_subContent)
+    values (#{articleId,jdbcType=INTEGER}, #{articleTitle,jdbcType=VARCHAR}, #{articleCreatedate,jdbcType=DATE}, 
+      #{articleLastmodify,jdbcType=DATE}, #{articleUserid,jdbcType=INTEGER}, #{articleCategoryid,jdbcType=INTEGER}, 
+      #{articleContent,jdbcType=LONGVARCHAR},#{articleSubContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rblog.bean.Article">
+    insert into article_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        article_id,
+      </if>
+      <if test="articleTitle != null">
+        article_title,
+      </if>
+      <if test="articleCreatedate != null">
+        article_createdate,
+      </if>
+      <if test="articleLastmodify != null">
+        article_lastmodify,
+      </if>
+      <if test="articleUserid != null">
+        article_userid,
+      </if>
+      <if test="articleCategoryid != null">
+        article_categoryid,
+      </if>
+      <if test="articleContent != null">
+        article_content,
+      </if>
+      <if test="articleSubContent != null">
+        article_subContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="articleTitle != null">
+        #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCreatedate != null">
+        #{articleCreatedate,jdbcType=DATE},
+      </if>
+      <if test="articleLastmodify != null">
+        #{articleLastmodify,jdbcType=DATE},
+      </if>
+      <if test="articleUserid != null">
+        #{articleUserid,jdbcType=INTEGER},
+      </if>
+      <if test="articleCategoryid != null">
+        #{articleCategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="articleContent != null">
+        #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleSubContent != null">
+        #{articleSubContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.rblog.bean.ArticleExample" resultType="java.lang.Long">
+    select count(*) from article_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update article_info
+    <set>
+      <if test="record.articleId != null">
+        article_id = #{record.articleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleTitle != null">
+        article_title = #{record.articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleCreatedate != null">
+        article_createdate = #{record.articleCreatedate,jdbcType=DATE},
+      </if>
+      <if test="record.articleLastmodify != null">
+        article_lastmodify = #{record.articleLastmodify,jdbcType=DATE},
+      </if>
+      <if test="record.articleUserid != null">
+        article_userid = #{record.articleUserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleCategoryid != null">
+        article_categoryid = #{record.articleCategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleContent != null">
+        article_content = #{record.articleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.articleSubContent != null">
+        article_subContent = #{record.articleSubContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update article_info
+    set article_id = #{record.articleId,jdbcType=INTEGER},
+      article_title = #{record.articleTitle,jdbcType=VARCHAR},
+      article_createdate = #{record.articleCreatedate,jdbcType=DATE},
+      article_lastmodify = #{record.articleLastmodify,jdbcType=DATE},
+      article_userid = #{record.articleUserid,jdbcType=INTEGER},
+      article_categoryid = #{record.articleCategoryid,jdbcType=INTEGER},
+      article_content = #{record.articleContent,jdbcType=LONGVARCHAR},
+      article_subContent = #{record.articleSubContent,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update article_info
+    set article_id = #{record.articleId,jdbcType=INTEGER},
+      article_title = #{record.articleTitle,jdbcType=VARCHAR},
+      article_createdate = #{record.articleCreatedate,jdbcType=DATE},
+      article_lastmodify = #{record.articleLastmodify,jdbcType=DATE},
+      article_userid = #{record.articleUserid,jdbcType=INTEGER},
+      article_categoryid = #{record.articleCategoryid,jdbcType=INTEGER},
+    article_subContent = #{record.articleSubContent,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rblog.bean.Article">
+    update article_info
+    <set>
+      <if test="articleTitle != null">
+        article_title = #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCreatedate != null">
+        article_createdate = #{articleCreatedate,jdbcType=DATE},
+      </if>
+      <if test="articleLastmodify != null">
+        article_lastmodify = #{articleLastmodify,jdbcType=DATE},
+      </if>
+      <if test="articleUserid != null">
+        article_userid = #{articleUserid,jdbcType=INTEGER},
+      </if>
+      <if test="articleCategoryid != null">
+        article_categoryid = #{articleCategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="articleContent != null">
+        article_content = #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleSubContent != null">
+        article_subContent = #{articleSubContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.rblog.bean.Article">
+    update article_info
+    set article_title = #{articleTitle,jdbcType=VARCHAR},
+      article_createdate = #{articleCreatedate,jdbcType=DATE},
+      article_lastmodify = #{articleLastmodify,jdbcType=DATE},
+      article_userid = #{articleUserid,jdbcType=INTEGER},
+      article_categoryid = #{articleCategoryid,jdbcType=INTEGER},
+      article_content = #{articleContent,jdbcType=LONGVARCHAR},
+      article_subContent = #{articleSubContent,jdbcType=VARCHAR}
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rblog.bean.Article">
+    update article_info
+    set article_title = #{articleTitle,jdbcType=VARCHAR},
+      article_createdate = #{articleCreatedate,jdbcType=DATE},
+      article_lastmodify = #{articleLastmodify,jdbcType=DATE},
+      article_userid = #{articleUserid,jdbcType=INTEGER},
+      article_categoryid = #{articleCategoryid,jdbcType=INTEGER},
+      article_subContent = #{articleSubContent,jdbcType=VARCHAR}
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+</mapper>
