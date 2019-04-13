@@ -281,6 +281,38 @@
     </set>
     where article_id = #{articleId,jdbcType=INTEGER}
   </update>
+
+  <update id="updateByPrimaryKeySelectiveWithBlobs" parameterType="com.rblog.bean.Article">
+    update article_info
+    <set>
+      <if test="articleTitle != null">
+        article_title = #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCreatedate != null">
+        article_createdate = #{articleCreatedate,jdbcType=DATE},
+      </if>
+      <if test="articleLastmodify != null">
+        article_lastmodify = #{articleLastmodify,jdbcType=DATE},
+      </if>
+      <if test="articleUserid != null">
+        article_userid = #{articleUserid,jdbcType=INTEGER},
+      </if>
+      <if test="articleCategoryid != null">
+        article_categoryid = #{articleCategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="articleContent != null">
+        article_content = #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleSubContent != null">
+        article_subContent = #{articleSubContent,jdbcType=VARCHAR},
+      </if>
+      <if test="articleContent != null">
+        article_content = #{articleContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.rblog.bean.Article">
     update article_info
     set article_title = #{articleTitle,jdbcType=VARCHAR},

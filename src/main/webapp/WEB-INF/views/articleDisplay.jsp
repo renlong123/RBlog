@@ -113,10 +113,14 @@
                                 <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span>
                                 <a href="${pageContext.request.contextPath}/person">我的信息</a></div>
                             <div></div>
-                            <div class="item-content isChecked">
-                                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                                <a href="#">文章列表</a></div>
-                            <div></div>
+                                <div class="item-content isChecked">
+                                    <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                                    <a href="${pageContext.request.contextPath}/article">文章列表</a></div>
+                                <div></div>
+                                <div class="item-content">
+                                    <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                                    <a href="${pageContext.request.contextPath}/person">编辑内容</a></div>
+                                <div></div>
                             <%--<li class="item-content"><a href="#">我的信息</a></li>
                             <div></div>
                             <li class="item-content"><a href="#">我的信息</a></li>

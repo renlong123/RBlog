@@ -12,4 +12,10 @@ public interface ArticleService {
     List<Article> selectAll();
 
     Article selectByPrimaryKey(Integer articleId);
+
+    int updateByPrimaryKeySelectiveWithBlobs(Article record);
+
+    int deleteByPrimaryKey(Integer articleId);
+
+    int deleteBatch(List<Integer> ids);
 }

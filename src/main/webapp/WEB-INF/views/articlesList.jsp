@@ -53,9 +53,46 @@
             background-color: #5f2dab;
             font-color: white;
         }
+        .float-div{
+            position: absolute;
+            width: 300px;
+            height: 50px;
+            top:11px;
+            left: 300px;
+            text-align: center;
+            z-index: 999;
+            background-color: #00cc00;
+            background: rgba(00,22,33,0.5);
+            display: none;
+        }
+        .table-bordered > tbody > tr > td
+        {
+            border: white 0px solid;
+        }
+        .table-bordered{
+            border: white 0px solid;
+        }
     </style>
 </head>
 <body>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">确定要删除这篇博客吗？</h4>
+            </div>
+            <div class="modal-body" id="articledesc">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="deletereal">删除</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!--把导航栏包含进来-->
 <jsp:include page="navigate.jsp"></jsp:include>
 
@@ -65,18 +102,22 @@
         <%--            <link href="https://v4.bootcss.com/docs/4.0/examples/dashboard/dashboard.css" rel="stylesheet">--%>
         <nav class="col-md-2 sidebar">
 
-            <div class="panel panel-success">
+            <div class="panel panel-default">
                 <div class="panel-heading" style="text-align: center">个人信息</div>
                 <div class="panel-body" style="margin: 0px">
                     <%--<ul class="items-group">--%>
                     <div class="item-content ">
                         <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <a href="${pageContext.request.contextPath}/person">我的信息</a></div>
+                        <a href="#">我的信息</a></div>
                     <div></div>
                     <div class="item-content isChecked">
                         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
                         <a href="#">文章列表</a></div>
                     <div></div>
+                        <div class="item-content">
+                            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                            <a href="${pageContext.request.contextPath}/person">编辑内容</a></div>
+                        <div></div>
                     <%--<li class="item-content"><a href="#">我的信息</a></li>
                     <div></div>
                     <li class="item-content"><a href="#">我的信息</a></li>
@@ -119,27 +160,72 @@
                         This week
                     </button>
                 </div>--%>
-                <ol class="breadcrumb">
+                <div class="float-div" id="tipcontent">
+                    删除成功！
+                </div>
+                <ol class="breadcrumb" style="margin-left: 14px;margin-right: 14px">
                     <li><a href="#">个人信息</a></li>
                     <li class="active">所有博客</li>
                 </ol>
                 <div>
-                    <div class="col-lg-10">
-                        <div class="panel panel-success" style="margin: 5px;">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default" >
                             <div class="panel-heading">
                                 <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                                 最新文章
+                                <span style="float: right">
+                                    <input type="checkbox" name="selectall" value="" id="checkedAll"/>&nbsp;
+                                    <a href="#"  id="deleteall">批量删除</a>
+                                </span>
                             </div>
                             <div class="panel-body" id="content-area">
-                                <c:forEach items="${articles}" var="article">
-                                    <span class="content-title"><a href="${pageContext.request.contextPath}/oneArticle?articleId=${article.articleId}">${article.articleTitle}</a> </span>
-                                    <span style="float: right" ><a href="${pageContext.request.contextPath}/oneArticle?articleId=${article.articleId}" >编辑</a></span><br/>
+                                <div class=".container-fluid">
+                                    <div class="row">
+                                        <table class="table table-bordered">
+                                        <c:forEach items="${articles}" var="article">
+                                            <%--<div class="form-group" id="fordeletepatchcontent">
+                                                <div class="col-lg-1">
 
-                                    <span class="content-info" style="font-size: 12px">作者：<a href="#">${article.articleUserid}</a></span>
-                                    <span style="float: right;font-size: 12px" >发表日期：<fmt:formatDate value="${article.articleLastmodify}" pattern="yyyy-MM-dd"/></span>
-                                    <div class="content-body" id="111111">${article.articleSubContent}</div>
-                                    <hr/>
-                                </c:forEach>
+                                                </div>
+                                                <div class="col-lg-11">
+                                                    <span class="content-title"><a href="${pageContext.request.contextPath}/oneArticle/${article.articleId}">${article.articleTitle}</a> </span>
+                                                    <span style="float: right" >
+                                                        <a href="${pageContext.request.contextPath}/editArticle/${article.articleId}" >编辑</a>
+                                                        &nbsp; &nbsp;
+                                                        <a href="#" id="deleteContent"
+                                                        onclick="deleteContentById('${article.articleId}','${article.articleTitle}','${article.articleSubContent}')">删除</a>
+                                                    </span>
+                                                    <br/>
+                                                    <span class="content-info" style="font-size: 12px">作者：<a href="#">${article.articleUserid}</a></span>
+                                                    <span style="float: right;font-size: 12px" >发表日期：<fmt:formatDate value="${article.articleLastmodify}" pattern="yyyy-MM-dd"/></span>
+                                                    <div class="content-body" id="111111">${article.articleSubContent}</div>
+                                                    <hr/>
+                                                </div>
+                                            </div>--%>
+                                            <tr>
+                                                <td style="width: 5%;padding-top: 30px;text-align: center;"  >
+                                                    <input type="checkbox" name="list" value="${article.articleId}" class="checkboxlist"/>
+                                                </td>
+                                                <td style="/*background-color: yellowgreen*/">
+                                                    <span class="content-title"><a href="${pageContext.request.contextPath}/oneArticle/${article.articleId}">${article.articleTitle}</a> </span>
+                                                    <span style="float: right" >
+                                                        <a href="${pageContext.request.contextPath}/editArticle/${article.articleId}" >编辑</a>
+                                                        &nbsp; &nbsp;
+                                                        <a href="#" id="deleteContent"
+                                                           onclick="deleteContentById('${article.articleId}','${article.articleTitle}','${article.articleSubContent}')">删除</a>
+                                                    </span>
+                                                    <br/>
+                                                    <span class="content-info" style="font-size: 12px">作者：<a href="#">${article.articleUserid}</a></span>
+                                                    <span style="float: right;font-size: 12px" >发表日期：<fmt:formatDate value="${article.articleLastmodify}" pattern="yyyy-MM-dd"/></span>
+                                                    <span style="display: none" >${article.articleId}</span>
+                                                    <div class="content-body" id="111111">${article.articleSubContent}</div>
+                                                    <hr/>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -148,5 +234,95 @@
         </main>
     </div>
 </div>
+
+
+<script type="text/javascript">
+    /*        $(function(){
+                deleteContentById(Article{articleId=1,
+                    articleTitle='java多线程', articleCreatedate=Wed Apr 10 00:00:00 CST 2019,
+                    articleLastmodify=Sat Apr 13 00:00:00 CST 2019, articleUserid=1, articleCategoryid=3,
+                    articleSubContent='图片图片我来了v就卡的  图片     图片  图片  图片yrrrrffffhhhh图片'})");
+            });*/
+    function deleteContentById(articleId,articleTitle,articleSubContent){
+        $("#myModal").modal();
+        fullBody(articleTitle,articleSubContent);
+        $("#deletereal").click(function (){
+            realDelete(articleId);
+        });
+    }
+
+    /**
+     * 真正执行删除
+     */
+    function realDelete(articleId) {
+        $.ajax({
+            url:'${pageContext.request.contextPath}/oneArticle/'+articleId.toString(),
+            type:"POST",
+            data: {
+                "_method":"DELETE"
+            },
+            success:function (mes) {
+                /*alert("chenggong");*/
+                $("#myModal").modal('hide');
+                showSuccess();
+                console.log(mes);
+            },
+            error:function(mes){
+                alert("error");
+                console.log(mes);
+            }
+        });
+        /*window.location.href="<%--${pageContext.request.contextPath}--%>/article";*/
+    }
+
+    /**
+     * 填充模态框的内容
+     */
+    function fullBody(articleTitle,articleSubContent) {
+        var body = $("#articledesc");
+        body.empty();
+        var title = $("<div></div>").append(articleTitle);
+        var subContent = $("<div></div>").append(articleSubContent);
+        body.append(title).append($("<hr/>")).append(subContent);
+    }
+
+    $("#checkedAll").click(function(){
+        $(".checkboxlist").prop("checked",$(this).prop("checked"));
+    });
+
+    $(document).on("click",".checkboxlist",function(){
+       var ifff = $(".checkboxlist:checked").length==$(".checkboxlist").length;
+       $("#checkedAll").prop("checked",ifff);
+    });
+
+    $("#deleteall").click(function(){
+        var titles = "";
+        var ids="";
+       $.each($(".checkboxlist:checked"),function(){
+            titles += $(this).parents("tr").find("span:eq(0)").text();
+            ids += $(this).parents("tr").find("span:eq(4)").text().trim();
+            ids += "-";
+       });
+       if(confirm("确认删除["+titles+"]吗？")){
+           $.ajax({
+               url:'${pageContext.request.contextPath}/oneArticle/'+ids,
+               type:"DELETE",
+               success:function (mes) {
+                   /*alert("chenggong");*/
+                   /*$("#myModal").modal('hide');
+                   showSuccess();*/
+                   console.log(mes);
+               },
+               error:function(mes){
+                   alert("error");
+                   console.log(mes);
+               }
+           });
+       }
+    });
+</script>
+
+
+
 </body>
 </html>

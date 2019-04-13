@@ -60,19 +60,23 @@
     <div class="container-fluid">
         <div class="row">
 <%--            <link href="https://v4.bootcss.com/docs/4.0/examples/dashboard/dashboard.css" rel="stylesheet">--%>
-            <nav class="col-md-2 sidebar">
+            <nav class="col-lg-2 sidebar">
 
                 <div class="panel panel-success">
                     <div class="panel-heading" style="text-align: center">个人信息</div>
                     <div class="panel-body" style="margin: 0px">
                         <%--<ul class="items-group">--%>
-                            <div class="item-content isChecked">
+                            <div class="item-content">
                                 <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span>
                                 <a href="#">我的信息</a></div>
                             <div></div>
                             <div class="item-content ">
                                 <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
                                 <a href="${pageContext.request.contextPath}/article">文章列表</a></div>
+                            <div></div>
+                            <div class="item-content isChecked">
+                                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                                <a href="#">编辑内容</a></div>
                             <div></div>
                             <%--<li class="item-content"><a href="#">我的信息</a></li>
                             <div></div>
@@ -103,7 +107,7 @@
                 </div>
             </nav>--%>
 
-            <main role="main" class="col-md-10 content-float">
+            <main role="main" class="col-lg-10 content-float">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <%--<h1 class="h2">Dashboard</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">

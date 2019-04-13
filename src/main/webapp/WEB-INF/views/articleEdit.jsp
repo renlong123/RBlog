@@ -48,7 +48,7 @@
         }
         .isChecked{
             background-color: #5f2dab;
-            font-color: white;
+            font-family: Consolas;
         }
     </style>
 </head>
@@ -66,7 +66,7 @@
                 <div class="panel-heading" style="text-align: center">个人信息</div>
                 <div class="panel-body" style="margin: 0px">
                     <%--<ul class="items-group">--%>
-                    <div class="item-content isChecked">
+                    <div class="item-content">
                         <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span>
                         <a href="#">我的信息</a></div>
                     <div></div>
@@ -74,6 +74,10 @@
                         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
                         <a href="${pageContext.request.contextPath}/article">文章列表</a></div>
                     <div></div>
+                        <div class="item-content isChecked">
+                            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                            <a href="#">编辑文章</a></div>
+                        <div></div>
                     <%--<li class="item-content"><a href="#">我的信息</a></li>
                     <div></div>
                     <li class="item-content"><a href="#">我的信息</a></li>
@@ -122,7 +126,7 @@
                     <li class="active">BootStrap 面包屑导航 </li>
                 </ol>
                 <div>
-                    <form action="action1" method="post" class="form-horizontal">
+                    <form action="action1" method="put" class="form-horizontal">
                         <div class="input-group">
                             <span class="input-group-addon">标题</span>
                             <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
@@ -135,7 +139,7 @@
                                     <span class="input-group-addon">类别</span>
                                     <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
                                            name="articleCategoryid" id="articleCategoryid" placeholder="请输入分类"
-                                           value="${article.articleCategoryid}>
+                                           value="${article.articleCategoryid}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -148,18 +152,17 @@
                                 <label class="radio-inline">
                                     <input type="radio" name="isPublic" id="inlineRadio2" value="no"> 否
                                 </label>
-                                <%-- </div>--%>
                             </div>
 
                         </div>
 
                         <%--默认内容--%>
                         <script id="container" name="articleContent" type="text/plain">
-                            '${article.articleContent}'
+                            ${article.articleContent}
                         </script>
                         <input type="submit" class="btn btn-success" value="发帖">
                     </form>
-                    <button class="btn btn-success" onclick="getContent()">获取内容</button>
+                    <%--<button class="btn btn-success" onclick="getContent()">获取内容</button>--%>
                     <button class="btn btn-success" onclick="saveContent()">保存内容</button>
 
                     <script>
@@ -195,13 +198,14 @@
                             var content = ue.getContent();
                             console.log(content.toString());
                             $.ajax({
-                                url:"${pageContext.request.contextPath}/article",
+                                url:"${pageContext.request.contextPath}/oneArticle/${article.articleId}",
                                 type:"POST",
                                 data: {
                                     "articleTitle": $('#articleTitle').val(),
                                     "articleCategoryid": parseInt($('#articleCategoryid').val()),
                                     /*"&isPublic="+$('isPublic').value=="yes"?"是":"否"+*/
-                                    "articleContent": content
+                                    "articleContent": content,
+                                    "_method":"PUT"
                                 }
                                 ,
                                 success:function (mes) {

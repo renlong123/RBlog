@@ -4,11 +4,10 @@ import com.rblog.bean.Article;
 import com.rblog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,8 +29,8 @@ public class ArticleController {
         article.setArticleCreatedate(now);
         article.setArticleLastmodify(now);
         article.setArticleUserid(1);
-        String subString = article.getArticleContent().substring(0,100).replaceAll("<","").trim();
-        article.setarticleSubContent(subString);
+        /*String subString = article.getArticleContent().substring(0,100).replaceAll("<","").trim();
+        article.setarticleSubContent(subString);*/
         int result = articleService.saveArticleSelective(article);
         return result==1?"success":"fail";
     }
@@ -50,8 +49,8 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/oneArticle",method = RequestMethod.GET)
-    public ModelAndView selectOneSelect(Integer articleId){
+    @RequestMapping(value = "/oneArticle/{articleId}",method = RequestMethod.GET)
+    public ModelAndView selectOneSelect(@PathVariable("articleId") Integer articleId){
         ModelAndView mav = new ModelAndView("articleDisplay");
         Article article = articleService.selectByPrimaryKey(articleId);
         mav.addObject("article",article);
@@ -59,12 +58,45 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/oneArticle",method = RequestMethod.PUT)
-    public ModelAndView selectOneEdit(Integer articleId){
+    @RequestMapping(value = "/editArticle/{articleId}",method = RequestMethod.GET)
+    public ModelAndView selectOneEdit(@PathVariable("articleId")Integer articleId){
         ModelAndView mav = new ModelAndView("articleEdit");
         Article article = articleService.selectByPrimaryKey(articleId);
         mav.addObject("article",article);
         return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/oneArticle/{articleId}",method = RequestMethod.PUT)
+    public String updateById(@PathVariable("articleId")Integer articleId,Article article){
+        article.setArticleLastmodify(new Date());
+/*        String subString = article.getArticleContent().substring(0,100).replaceAll("<","").trim();
+        article.setarticleSubContent(subString);*/
+        article.setArticleId(articleId);
+       /* System.out.println(article.toString());*/
+        return articleService.updateByPrimaryKeySelectiveWithBlobs(article)!=0?"success":"fail";
+    }
+
+    /**
+     * 通过Id删除，controller层
+     * @param ids
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/oneArticle/{articleId}",method = RequestMethod.DELETE)
+    public String deleteById(@PathVariable("articleId")String ids){
+        int result = 0;
+        if(ids.contains("-")){
+            List<Integer> lists = new ArrayList<>();
+            String[] strings = ids.split("-");
+            for(String id:strings){
+                lists.add(Integer.parseInt(id));
+            }
+            result = articleService.deleteBatch(lists);
+        }else{
+             result = articleService.deleteByPrimaryKey(Integer.parseInt(ids));
+        }
+        return result!=0?"success":"fail";
     }
 
 }
