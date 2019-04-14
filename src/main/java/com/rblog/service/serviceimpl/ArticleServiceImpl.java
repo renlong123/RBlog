@@ -7,7 +7,9 @@ import com.rblog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @Service
@@ -71,5 +73,33 @@ public class ArticleServiceImpl implements ArticleService {
         return result;
     }
 
+    @Override
+    public List<Article> selectByPage(Integer pageNumber, Integer countPerPage) {
+        Map map = new HashMap<>();
+        map.put("pageNumber",pageNumber);
+        map.put("countPerPage",countPerPage);
+        return articleMapper.selectByPage(map);
+    }
+
+    @Override
+    public List<Article> selectThree() {
+        return articleMapper.selectThree();
+    }
+
+    public int deleteByCategory(Integer categoryId){
+        ArticleExample example = new ArticleExample();
+        ArticleExample.Criteria criteria = example.createCriteria();
+        criteria.andArticleCategoryidEqualTo(categoryId);
+        int result = articleMapper.deleteByExample(example);
+        return result;
+    }
+
+    public int deleteByCategories(List<Integer> list){
+        ArticleExample example = new ArticleExample();
+        ArticleExample.Criteria criteria = example.createCriteria();
+        criteria.andArticleCategoryidIn(list);
+        int result = articleMapper.deleteByExample(example);
+        return result;
+    }
 
 }

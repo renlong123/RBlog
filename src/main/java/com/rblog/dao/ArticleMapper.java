@@ -3,6 +3,8 @@ package com.rblog.dao;
 import com.rblog.bean.Article;
 import com.rblog.bean.ArticleExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ArticleMapper {
@@ -19,6 +21,10 @@ public interface ArticleMapper {
     List<Article> selectByExampleWithBLOBs(ArticleExample example);
 
     List<Article> selectByExample(ArticleExample example);
+
+    List<Article> selectByPage(Map map);
+
+    List<Article> selectThree();
 
     Article selectByPrimaryKey(Integer articleId);
 

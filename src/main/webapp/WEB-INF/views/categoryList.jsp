@@ -82,7 +82,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">确定要删除这篇博客吗？</h4>
+                <h4 class="modal-title" id="myModalLabel">确定要删除这个分类吗？这个分类下所有文章都会被删除！</h4>
             </div>
             <div class="modal-body" id="articledesc">
             </div>
@@ -110,17 +110,17 @@
                         <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span>
                         <a href="#">我的信息</a></div>
                     <div></div>
-                    <div class="item-content isChecked">
+                    <div class="item-content">
                         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                        <a href="#">文章列表</a></div>
+                        <a href="${pageContext.request.contextPath}/article">文章列表</a></div>
                     <div></div>
-                        <div class="item-content">
+                    <div class="item-content">
+                        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                        <a href="${pageContext.request.contextPath}/person">编辑内容</a></div>
+                    <div></div>
+                        <div class="item-content isChecked">
                             <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                            <a href="${pageContext.request.contextPath}/person">编辑内容</a></div>
-                        <div></div>
-                        <div class="item-content">
-                            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                            <a href="${pageContext.request.contextPath}/categoryjump">分类列表</a></div>
+                            <a href="#">分类列表</a></div>
                         <div></div>
                     <%--<li class="item-content"><a href="#">我的信息</a></li>
                     <div></div>
@@ -169,129 +169,45 @@
                 </div>
                 <ol class="breadcrumb" style="margin-left: 14px;margin-right: 14px">
                     <li><a href="#">个人信息</a></li>
-                    <li class="active">所有博客</li>
+                    <li class="active">所有分类</li>
                 </ol>
                 <div>
                     <div class="col-lg-12">
                         <div class="panel panel-default" >
                             <div class="panel-heading">
                                 <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                                最新文章
+                                所有分类
                                 <span style="float: right">
                                     <input type="checkbox" name="selectall" value="" id="checkedAll"/>&nbsp;
-                                    <a href="#"  id="deleteall">批量删除</a>
+                                    <a href="#" id="deleteall">批量删除</a>&nbsp;
+                                    <a href="#" id="deleteone">删除</a>
                                 </span>
                             </div>
                             <div class="panel-body" id="content-area">
 
                                 <div class=".container-fluid">
                                     <div class="row">
-                                        <table class="table table-bordered">
-
-                                        <c:forEach items="${pageInfo.list}" var="article">
-                                            <%--<div class="form-group" id="fordeletepatchcontent">
-                                                <div class="col-lg-1">
-
+                                        <c:forEach items="${categories}" var="category">
+                                            <div class="col-xs-3">
+                                                <div class="panel panel-default" style="margin-bottom: 20px;padding: 10px;background-color: lightgray;height: 100px"
+                                                     id="categoryitem">
+                                                    <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                                                    <a href="#" style="float: right">${category.categoryName}</a>
+                                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;${category.categoryDescription}</div>
+                                                    <div style="position: absolute;top:80px;width:76%;display: none" class="deletediv">
+                                                        <input type="checkbox" name="checkboxs" class="checkboxlist" value="${category.categoryId}"/>
+                                                        <a href="#" style="float: right"
+                                                           onclick="deletecategories('${category.categoryId}','${category.categoryName}','${category.categoryDescription}')">删除</a>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-11">
-                                                    <span class="content-title"><a href="${pageContext.request.contextPath}/oneArticle/${article.articleId}">${article.articleTitle}</a> </span>
-                                                    <span style="float: right" >
-                                                        <a href="${pageContext.request.contextPath}/editArticle/${article.articleId}" >编辑</a>
-                                                        &nbsp; &nbsp;
-                                                        <a href="#" id="deleteContent"
-                                                        onclick="deleteContentById('${article.articleId}','${article.articleTitle}','${article.articleSubContent}')">删除</a>
-                                                    </span>
-                                                    <br/>
-                                                    <span class="content-info" style="font-size: 12px">作者：<a href="#">${article.articleUserid}</a></span>
-                                                    <span style="float: right;font-size: 12px" >发表日期：<fmt:formatDate value="${article.articleLastmodify}" pattern="yyyy-MM-dd"/></span>
-                                                    <div class="content-body" id="111111">${article.articleSubContent}</div>
-                                                    <hr/>
-                                                </div>
-                                            </div>--%>
-                                            <tr>
-                                                <td style="width: 5%;padding-top: 30px;text-align: center;"  >
-                                                    <input type="checkbox" name="list" value="${article.articleId}" class="checkboxlist"/>
-                                                </td>
-                                                <td style="/*background-color: yellowgreen*/">
-                                                    <span class="content-title"><a href="${pageContext.request.contextPath}/oneArticle/${article.articleId}">${article.articleTitle}</a> </span>
-                                                    <span style="float: right" >
-                                                        <a href="${pageContext.request.contextPath}/editArticle/${article.articleId}" >编辑</a>
-                                                        &nbsp; &nbsp;
-                                                        <a href="#" id="deleteContent"
-                                                           onclick="deleteContentById('${article.articleId}','${article.articleTitle}','${article.articleSubContent}')">删除</a>
-                                                    </span>
-                                                    <br/>
-                                                    <span class="content-info" style="font-size: 12px">作者：<a href="#">${article.articleUserid}</a></span>
-                                                    <span style="float: right;font-size: 12px" >发表日期：<fmt:formatDate value="${article.articleLastmodify}" pattern="yyyy-MM-dd"/></span>
-                                                    <span style="display: none" >${article.articleId}</span>
-                                                    <div class="content-body" id="111111">${article.articleSubContent}</div>
-                                                    <hr/>
-                                                </td>
-                                            </tr>
+                                            </div>
                                         </c:forEach>
-                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                        <div style="text-align: right;margin-right: 14px">
-                            当前第${pageInfo.pageNum}页，共${pageInfo.pages}页。
-                        </div>
-
-                        <nav aria-label="Page navigation" style="text-align: right;margin-right: 14px">
-
-                            <ul class="pagination">
-                                <li>
-                                    <a href="?pageNumber=1">首页</a>
-                                </li>
-                                <c:if test="${pageInfo.pageNum>1}">
-                                <li>
-                                        <a href="?pageNumber=${pageInfo.pageNum-1}" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                </li>
-                                </c:if>
-                                <c:if test="${pageInfo.pageNum<=1}">
-                                    <li class="disabled">
-                                        <a href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                </c:if>
-
-                                <c:forEach items="${pageInfo.navigatepageNums}" var="thispage">
-                                    <c:if test="${thispage==pageInfo.pageNum}">
-                                        <li class="active"><a href="#">${thispage}</a></li>
-                                    </c:if>
-
-                                    <c:if test="${thispage!=pageInfo.pageNum}">
-                                        <li><a href="?pageNumber=${thispage}">${thispage}</a></li>
-                                    </c:if>
-                                </c:forEach>
-
-                                <c:if test="${pageInfo.pageNum<pageInfo.pages}">
-                                    <li>
-                                        <a href="?pageNumber=${pageInfo.pageNum+1}" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </c:if>
-                                <c:if test="${pageInfo.pageNum>=pageInfo.pages}">
-                                    <li class="disabled">
-                                        <a href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </c:if>
-                                <li>
-                                    <a href="?pageNumber=${pageInfo.pages}">末页</a>
-                                </li>
-                            </ul>
-                        </nav>
-
             </div>
         </main>
     </div>
@@ -305,29 +221,27 @@
                     articleLastmodify=Sat Apr 13 00:00:00 CST 2019, articleUserid=1, articleCategoryid=3,
                     articleSubContent='图片图片我来了v就卡的  图片     图片  图片  图片yrrrrffffhhhh图片'})");
             });*/
-    function deleteContentById(articleId,articleTitle,articleSubContent){
+    function deletecategories(categoryId,categoryName,categoryDescription){
         $("#myModal").modal();
-        fullBody(articleTitle,articleSubContent);
+        fullBody(categoryName,categoryDescription);
         $("#deletereal").click(function (){
-            realDelete(articleId);
+            realDelete(categoryId);
         });
     }
 
     /**
      * 真正执行删除
      */
-    function realDelete(articleId) {
+    function realDelete(categoryId) {
         $.ajax({
-            url:'${pageContext.request.contextPath}/oneArticle/'+articleId.toString(),
-            type:"POST",
-            data: {
-                "_method":"DELETE"
-            },
+            url:'${pageContext.request.contextPath}/category/'+categoryId.toString(),
+            type:"DELETE",
             success:function (mes) {
                 /*alert("chenggong");*/
                 $("#myModal").modal('hide');
-                showSuccess();
+                /*showSuccess();*/
                 console.log(mes);
+                window.location.href="${pageContext.request.contextPath}/categoryjump";
             },
             error:function(mes){
                 alert("error");
@@ -353,35 +267,42 @@
     });
 
     $(document).on("click",".checkboxlist",function(){
-       var ifff = $(".checkboxlist:checked").length==$(".checkboxlist").length;
-       $("#checkedAll").prop("checked",ifff);
+        var ifff = $(".checkboxlist:checked").length==$(".checkboxlist").length;
+        $("#checkedAll").prop("checked",ifff);
     });
+
+    /*点击后显示删除框*/
+    $("#deleteone").click(function () {
+        $(".deletediv").show();
+    });
+
 
     $("#deleteall").click(function(){
         var titles = "";
         var ids="";
-       $.each($(".checkboxlist:checked"),function(){
-            titles += $(this).parents("tr").find("span:eq(0)").text();
-            ids += $(this).parents("tr").find("span:eq(4)").text().trim();
+        $.each($(".checkboxlist:checked"),function(){
+            titles += $(this).parent().parent().find("a:eq(0)").text();
+            ids += $(this).parent().find("input:eq(0)").val().trim();
             ids += "-";
-       });
-       if(confirm("确认删除["+titles+"]吗？")){
-           $.ajax({
-               url:'${pageContext.request.contextPath}/oneArticle/'+ids,
-               type:"DELETE",
-               success:function (mes) {
-                   /*alert("chenggong");*/
-                   /*$("#myModal").modal('hide');
-                   showSuccess();*/
-                   window.location.href="${pageContext.request.contextPath}/article";
-                   console.log(mes);
-               },
-               error:function(mes){
-                   alert("error");
-                   console.log(mes);
-               }
-           });
-       }
+        });
+        console.log(ids);
+        if(confirm("确认删除["+titles+"]吗？")){
+            $.ajax({
+                url:'${pageContext.request.contextPath}/category/'+ids.toString(),
+                type:"DELETE",
+                success:function (mes) {
+                    /*alert("chenggong");*/
+                    $("#myModal").modal('hide');
+                    /*showSuccess();*/
+                    console.log(mes);
+                    window.location.href="${pageContext.request.contextPath}/categoryjump";
+                },
+                error:function(mes){
+                    alert("error");
+                    console.log(mes);
+                }
+            });
+        }
     });
 </script>
 

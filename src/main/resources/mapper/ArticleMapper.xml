@@ -108,6 +108,21 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from article_info
+    limit #{pageNumber},#{countPerPage}
+  </select>
+
+  <select id="selectThree" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from article_info
+    limit 0,3
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />

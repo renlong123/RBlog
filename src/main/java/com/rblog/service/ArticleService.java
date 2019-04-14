@@ -18,4 +18,10 @@ public interface ArticleService {
     int deleteByPrimaryKey(Integer articleId);
 
     int deleteBatch(List<Integer> ids);
+
+    List<Article> selectByPage(Integer pageNumber,Integer countPerPage);
+
+    List<Article> selectThree();
+
+    int deleteByCategory(Integer categoryId);
 }

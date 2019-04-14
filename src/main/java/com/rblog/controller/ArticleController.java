@@ -1,5 +1,7 @@
 package com.rblog.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.rblog.bean.Article;
 import com.rblog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ArticleController {
@@ -41,11 +41,22 @@ public class ArticleController {
      */
     @ResponseBody
     @RequestMapping(value = "/article",method = RequestMethod.GET)
-    public ModelAndView selectFromDatabase(){
+    public ModelAndView selectFromDatabase(@RequestParam(defaultValue = "1",value = "pageNumber")Integer pageNumber){
         ModelAndView mav = new ModelAndView("articlesList");
-        List<Article> articles = articleService.selectAll();
-        mav.addObject("articles",articles);
+        PageHelper.startPage(pageNumber,5);
+        List<Article> list = articleService.selectAll();
+        PageInfo page = new PageInfo(list,5);
+        mav.addObject("pageInfo",page);
+
         return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/selectThree",method = RequestMethod.GET)
+    public List<Article> selectThree(){
+        List<Article> list = new ArrayList<>();
+        list = articleService.selectThree();
+        return list;
     }
 
     @ResponseBody

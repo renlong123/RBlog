@@ -53,6 +53,39 @@
     </style>
 </head>
 <body>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">新建分类</h4>
+            </div>
+            <div class="modal-body" id="articledesc">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputcategory" class="col-sm-2 control-label">分类名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" onblur="checkIsUnic()" id="inputcategory" placeholder="分类名,不能为空且不能重复">
+                            <span id="helpBlock1" class="help-block"></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">描述</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputPassword3" placeholder="描述">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="newcategoryreal" onclick="newcategoryreal()">新建</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <!--把导航栏包含进来-->
     <jsp:include page="navigate.jsp"></jsp:include>
 
@@ -77,6 +110,10 @@
                             <div class="item-content isChecked">
                                 <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
                                 <a href="#">编辑内容</a></div>
+                            <div></div>
+                            <div class="item-content">
+                                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                                <a href="${pageContext.request.contextPath}/categoryjump">分类列表</a></div>
                             <div></div>
                             <%--<li class="item-content"><a href="#">我的信息</a></li>
                             <div></div>
@@ -121,54 +158,181 @@
                         </button>
                     </div>--%>
                     <ol class="breadcrumb">
-                        <li><a href="#">前端技术</a></li>
-                        <li><a href="#">BootStrap </a></li>
-                        <li class="active">BootStrap 面包屑导航 </li>
+                        <li><a href="#">新建</a></li>
+                        <li class="active">新建博客</li>
                     </ol>
                     <div>
                         <form action="action1" method="post" class="form-horizontal">
-                            <div class="input-group">
-                                <span class="input-group-addon">标题</span>
-                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="articleTitle" id="articleTitle" placeholder="请输入标题">
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="input-group">
-                                    <span class="input-group-addon">类别</span>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="articleCategoryid" id="articleCategoryid" placeholder="请输入分类">
-                                    </div>
+                            <%--<div class="form-group">
+                                <label for="articleTitle" class="col-sm-1 control-label" >
+                                    标题</label>
+                                <div class="col-sm-11">
+                                    <input type="text" class="form-control " name="articleTitle" id="articleTitle" placeholder="请输入标题">
                                 </div>
-                                <div class="col-lg-6">
-                                    <%--<div class="panel panel-default">--%>
-                                    <span class="col-lg-2 control-label">是否公开</span>
-                                    <%--col-sm-2 control-label--%>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="isPublic" id="inlineRadio1" value="yes"> 是
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="isPublic" id="inlineRadio2" value="no"> 否
-                                    </label>
-                                   <%-- </div>--%>
+                            </div>--%>
+                            <div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">标题</span>
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
+                                           name="articleTitle" id="articleTitle" placeholder="请输入标题,标题不能为空"
+                                           <%--value="${article.articleTitle}"--%>  onblur="checkedIsUsed()">
+
+                                </div>
+                                    <span id="helpBlock2" class="help-block"></span>
+                            </div>
+                            <%--<div class="form-group">
+                                &lt;%&ndash;<div class="form-group">&ndash;%&gt;
+                                    <label for="department" class="col-sm-1 control-label">部门</label>
+                                        <div class="col-sm-4 " id="department">
+                                            <select class="form-control" name="dId" id="xyz">
+                                                <option>dsjfbhj</option>
+                                                <option>dsjfsdsbhj</option>
+                                            </select>
+                                        </div>
+
+                            </div>--%>
+                                <div class=".container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="input-group ">
+                                                <div class="input-group-addon">
+                                                    <%--<label class="input-group-text" for="inputGroupSelect01">--%>类别<%--</label>--%>
+                                                </div>
+                                                <select class="form-control custom-select" id="inputGroupSelect01">
+
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <button class="btn btn-default" type="button" onclick="createNewCategory()">新建分类</button>
+                                        </div>
+                                    </div>
+
                                 </div>
 
-                            </div>
+
+
+
 
                             <%--默认内容--%>
                             <script id="container" name="articleContent" type="text/plain">
                             </script>
-                            <input type="submit" class="btn btn-success" value="发帖">
+                            <%--<input type="submit" class="btn btn-success" value="发帖">--%>
                         </form>
-                        <button class="btn btn-success" onclick="getContent()">获取内容</button>
-                        <button class="btn btn-success" onclick="saveContent()">保存内容</button>
+                        <%--<button class="btn btn-success" onclick="getContent()">获取内容</button>--%>
+                        <button class="btn btn-success" onclick="saveContent()">发帖</button>
 
                         <script>
+                            function createNewCategory(){
+                                $("#myModal").modal();
+
+                            }
+                            
+                            function newcategoryreal() {
+                                $.ajax({
+                                    url:"${pageContext.request.contextPath}/category",
+                                    type:"POST",
+                                    data:{
+                                        "categoryName":$("#inputcategory").val(),
+                                        "categoryDescription":$("#inputPassword3").val()
+                                    },
+                                    success:function (mes) {
+
+                                           // alert(mes);
+                                        requestCategory();
+                                        $("#myModal").modal('hide');
+                                    },
+                                    fail:function () {
+                                        alert("error");
+                                    }
+                                });
+                            }
+
+                            function checkIsUnic(){
+
+                                if($("#inputcategory").val()==""){
+                                    $("#inputcategory").parent().addClass("has-error");
+                                    $("#helpBlock1").text("分类不能为空");
+                                }else{
+                                    $.ajax({
+                                        url:"${pageContext.request.contextPath}/forcheck",
+                                        type:"GET",
+                                        data:{
+                                          "categoryName":$("#inputcategory").val()
+                                        },
+                                        success:function (mes) {
+
+                                            if(mes!=0){
+                                                $("#inputcategory").parent().addClass("has-error");
+                                                $("#helpBlock1").text("分类已经存在");
+                                            }else{
+                                                $("#inputcategory").parent().addClass("has-success");
+                                                $("#helpBlock1").empty();
+                                            }
+                                        },
+                                        fail:function () {
+                                            alert("error");
+                                        }
+                                    });
+                                }
+                            }
+
+                            $(function () {
+
+                                requestCategory();
+                            });
+
+                            function requestCategory(){
+                                $.ajax({
+                                    url:"${pageContext.request.contextPath}/category",
+                                    type:"GET",
+                                    success:function (mes) {
+                                        console.log(mes);
+                                        fullSelect(mes);
+
+                                    },
+                                    error:function(){
+                                        alert("error");
+                                    }
+                                });
+                            }
+
+                            function fullSelect(mes){
+                                $("#inputGroupSelect01").empty();
+                                var list = mes;
+                                /*console.log(list);*/
+                                $.each(list,function(index,ite){
+                                    var optionws = $("<option></option>").attr("value",ite.categoryId).append(ite.categoryName);
+                                    optionws.appendTo($("#inputGroupSelect01"));
+                                    /*alert(ite.categoryId);*/
+                                });
+                                /*alert($('#inputGroupSelect01 option:selected').val());*/
+                            }
+
                            var ue = UE.getEditor('container',{
                                initialFrameHeight:400
                            });
 
+                            /**
+                             * 用作校验标题是否为空
+                             */
+                            function checkedIsUsed(){
+                                if($("#articleTitle").val()==""){
+                                    $("#articleTitle").parent().parent().addClass("has-error");
+                                    $("#helpBlock2").text("标题不能为空");
+                                }else{
+                                    $("#articleTitle").parent().parent().addClass("has-success");
+                                    $("#helpBlock2").text("标题可以使用");
+                                }
+                            }
 
                            function getContent(){
+                               /*ue.execCommand('insertimage', {
+                                   style: 'max-width:100%'
+                               });*/
                                var content = ue.getContent();
+
                                console.log(content.toString());
                                $.ajax({
                                    url:"${pageContext.request.contextPath}/action1",
@@ -191,6 +355,9 @@
                            }
 
                            function saveContent(){
+                              /* ue.execCommand('insertimage', {
+                                   style: 'max-width:100%'
+                               });*/
                                var content = ue.getContent();
                                console.log(content.toString());
                                $.ajax({
@@ -198,13 +365,14 @@
                                    type:"POST",
                                    data: {
                                        "articleTitle": $('#articleTitle').val(),
-                                       "articleCategoryid": parseInt($('#articleCategoryid').val()),
+                                       "articleCategoryid": parseInt($('#inputGroupSelect01 option:selected').val()),
                                        /*"&isPublic="+$('isPublic').value=="yes"?"是":"否"+*/
                                        "articleContent": content
                                    }
                                    ,
                                    success:function (mes) {
-                                       alert("chenggong");
+                                       /*alert("chenggong");*/
+                                       window.location.href="${pageContext.request.contextPath}/article";
                                        console.log(mes);
                                    },
                                    error:function(){

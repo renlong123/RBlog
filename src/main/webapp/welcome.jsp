@@ -12,6 +12,11 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.2.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <%--    <%@include file="WEB-INF/views/header.jsp"%>--%>
+    <style>
+        body{
+            padding-top: 70px;
+        }
+    </style>
 </head>
 <body>
 
@@ -73,19 +78,10 @@
             <div class="panel panel-success" style="margin: 5px;height: 400px">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                    最新文章${article.articleTitle}
+                    最新文章
+                    <a href="${pageContext.request.contextPath}/article" style="float: right">查看更多</a>
                 </div>
                 <div class="panel-body" id="content-area">
-
-                    <span class="content-title"><a href="#">${article.articleTitle}</a> </span><br/>
-                    <span class="content-info" style="font-size: 12px">作者：<a href="#">任龙</a></span>  <span style="float: right;font-size: 12px" >发表日期：3s 前</span>
-                    <div class="content-body">简写属性在一个声明中设置所有外边距属性。该属性可以有 1 到 4 个值。 说明 这个简写属性设置一个元素所有外边距的宽度,或者设置各边上外边距</div>
-                    <!--分割线-->
-                    <HR>
-                    <span class="content-title"><a href="#">java泛型详解</a> </span><br>
-                    <span class="content-info" style="font-size: 12px">作者：<a href="#">任龙</a></span>  <span style="float: right;font-size: 12px" >发表日期：1分钟 前</span>
-                    <div class="content-body">简写属性在一个声明中设置所有外边距属性。该属性可以有 1 到 4 个值。 说明 这个简写属性设置一个元素所有外边距的宽度,或者设置各边上外边距</div>
-
                 </div>
             </div>
         </div>
@@ -94,14 +90,15 @@
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                     精选分类
+                    <a href="#" style="float: right">查看更多</a>
                 </div>
-                <div class="panel-body">
-                    <button class="btn btn-default" style="margin: 3px">精选文章</button>
+                <div class="panel-body" id="categorycontent">
+                    <%--<button class="btn btn-default" style="margin: 3px">精选文章</button>
                     <button class="btn btn-success">redisfangda1fbvfjkdbfd</button>
-                   <%-- <button class="btn btn-block">java虚拟机</button>--%>
+                   &lt;%&ndash; <button class="btn btn-block">java虚拟机</button>&ndash;%&gt;
                     <button class="btn btn-danger">spring</button>
                     <button class="btn btn-warning">mybatis</button>
-                    <button class="btn btn-danger" style="margin: 3px">vsnkdvsjkjjjjjjjj</button>
+                    <button class="btn btn-danger" style="margin: 3px">vsnkdvsjkjjjjjjjj</button>--%>
                 </div>
             </div>
         </div>
@@ -123,22 +120,65 @@
             addArticle();
         });
 
-
-
         function addArticle() {
-            /*var state = ;
-            alert(state);*/
-            var content_text=$("#content-area");
-            var title = $("<span></span>").addClass("content-title").append($("<a href='#'></a>").append(article.articleTitle));
-            var author = $("<span></span>").addClass("content-info").append("作者：").append($("<a href='#'></a>").append("任龙"));
-            var time = $("<span></span>").append("发表日期："+article.articleLastmodify);
-            var content = $("<div></div>").addClass("content-body").append(article.articleContent);
-            content_text.append(title)
-                .append(author)
-                .append(time)
-                .append(content);
+            searchArticle();
+            searchCategory();
         }
 
+        function searchArticle(){
+            $.ajax({
+                url:"${pageContext.request.contextPath}/selectThree",
+                type:"GET",
+                success:function (data) {
+                    showData(data);
+                },
+                error:function(){
+                    alert("error");
+                }
+            });
+        }
+
+        function showData(data){
+            $.each(data,function(index,item){
+                var time = new Date(item.articleLastmodify);
+                var getString = time.getFullYear()+"-"+(time.getMonth()+1)+"-"+time.getDate();
+                var content_text=$("#content-area");
+                var title = $("<span></span>").addClass("content-title").attr("style","font-size:16px").append($("<a href='#'></a>").append(item.articleTitle));
+                var author = $("<span></span>").addClass("content-info").attr("style","font-size:12px").append("作者：").append($("<a href='#'></a>").append("任龙"));
+                var time = $("<span></span>").attr("style","font-size:12px;float:right").append("发表日期："+getString);
+                var content = $("<div></div>").addClass("content-body").append(item.articleSubContent);
+                content_text.append(title)
+                    .append($("<br/>"))
+                    .append(author)
+                    .append(time)
+                    .append(content)
+                    .append($("<hr/>"));
+
+            });
+
+        }
+
+        function searchCategory() {
+            $.ajax({
+                url:"${pageContext.request.contextPath}/category",
+                type:"GET",
+                success:function (data) {
+                    showCategoryData(data);
+                },
+                error:function(){
+                    alert("error");
+                }
+            });
+        }
+
+        function showCategoryData(data) {
+            $.each(data,function(index,item){
+                var content_text=$("#categorycontent");
+                var title = $("<span></span>").addClass("btn btn-default").attr("style","margin:3px")
+                    .attr("value",item.categoryId).append(item.categoryName);
+                content_text.append(title);
+            });
+        }
 
     </script>
 

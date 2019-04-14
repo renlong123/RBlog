@@ -27,7 +27,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/">首页 <span class="sr-only">(current)</span></a></li>
                 <li><a href="#">热门文章</a></li>
                 <li><a href="#">最新文章</a></li>
                 <li class="dropdown">

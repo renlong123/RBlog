@@ -7,10 +7,15 @@
     <!--自动转驼峰规则-->
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="logImpl" value="STDOUT_LOGGING" />
     </settings>
 
     <!--为bean下所有包配置别名-->
     <typeAliases>
         <package name="com.rblog.bean"></package>
     </typeAliases>
+
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
 </configuration>
