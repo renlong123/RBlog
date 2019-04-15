@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.rblog.bean.Article;
 import com.rblog.service.ArticleService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,14 @@ public class ArticleController {
 
     @Autowired
     ArticleService articleService;
+
+    /*仅用作视图跳转*/
+    @ResponseBody
+    @RequestMapping("/articleNew")
+    public ModelAndView dss(){
+        ModelAndView mav = new ModelAndView("articleNew");
+        return mav;
+    }
 
     /**
      * 该方法用于保存发帖界面的内容至数据库
@@ -108,6 +117,11 @@ public class ArticleController {
              result = articleService.deleteByPrimaryKey(Integer.parseInt(ids));
         }
         return result!=0?"success":"fail";
+    }
+
+    @RequestMapping(value = "/newArticle")
+    public void newArticle(){
+        ModelAndView mav = new ModelAndView("articleNew");
     }
 
 }

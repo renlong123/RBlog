@@ -108,7 +108,7 @@
                     <%--<ul class="items-group">--%>
                     <div class="item-content ">
                         <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <a href="#">我的信息</a></div>
+                        <a href="${pageContext.request.contextPath}/User/1">我的信息</a></div>
                     <div></div>
                     <div class="item-content isChecked">
                         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
@@ -116,7 +116,7 @@
                     <div></div>
                         <div class="item-content">
                             <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                            <a href="${pageContext.request.contextPath}/person">编辑内容</a></div>
+                            <a href="${pageContext.request.contextPath}/articleNew">新建文章</a></div>
                         <div></div>
                         <div class="item-content">
                             <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>

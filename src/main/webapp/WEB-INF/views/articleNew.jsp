@@ -48,7 +48,7 @@
         }
         .isChecked{
             background-color: #5f2dab;
-            font-family: Consolas;
+            font-color: white;
         }
     </style>
 </head>
@@ -93,7 +93,7 @@
 <div class="container-fluid">
     <div class="row">
         <%--            <link href="https://v4.bootcss.com/docs/4.0/examples/dashboard/dashboard.css" rel="stylesheet">--%>
-        <nav class="col-md-2 sidebar">
+        <nav class="col-lg-2 sidebar">
 
             <div class="panel panel-success">
                 <div class="panel-heading" style="text-align: center">个人信息</div>
@@ -107,18 +107,14 @@
                         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
                         <a href="${pageContext.request.contextPath}/article">文章列表</a></div>
                     <div></div>
-                        <div class="item-content">
-                            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                            <a href="${pageContext.request.contextPath}/articleNew">新建文章</a></div>
-                        <div></div>
-                        <div class="item-content isChecked">
-                            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                            <a href="#">编辑文章</a></div>
-                        <div></div>
-                        <div class="item-content">
-                            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                            <a href="${pageContext.request.contextPath}/categoryjump">分类列表</a></div>
-                        <div></div>
+                    <div class="item-content isChecked">
+                        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                        <a href="#">新建文章</a></div>
+                    <div></div>
+                    <div class="item-content">
+                        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                        <a href="${pageContext.request.contextPath}/categoryjump">分类列表</a></div>
+                    <div></div>
                     <%--<li class="item-content"><a href="#">我的信息</a></li>
                     <div></div>
                     <li class="item-content"><a href="#">我的信息</a></li>
@@ -148,7 +144,7 @@
                         </div>
                     </nav>--%>
 
-        <main role="main" class="col-md-10 content-float">
+        <main role="main" class="col-lg-10 content-float">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                 <%--<h1 class="h2">Dashboard</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
@@ -162,93 +158,70 @@
                     </button>
                 </div>--%>
                 <ol class="breadcrumb">
-                    <li><a href="#">前端技术</a></li>
-                    <li><a href="#">BootStrap </a></li>
-                    <li class="active">BootStrap 面包屑导航 </li>
+                    <li><a href="#">新建</a></li>
+                    <li class="active">新建博客</li>
                 </ol>
                 <div>
-                    <form action="action1" method="put" class="form-horizontal">
-                        <%--<div class="input-group">
-                            <span class="input-group-addon">标题</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
-                                   name="articleTitle" id="articleTitle" placeholder="请输入标题"
-                                    value="${article.articleTitle}">
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="input-group">
-                                    <span class="input-group-addon">类别</span>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
-                                           name="articleCategoryid" id="articleCategoryid" placeholder="请输入分类"
-                                           value="${article.articleCategoryid}">
-                                </div>
+                    <form action="action1" method="post" class="form-horizontal">
+                        <%--<div class="form-group">
+                            <label for="articleTitle" class="col-sm-1 control-label" >
+                                标题</label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control " name="articleTitle" id="articleTitle" placeholder="请输入标题">
                             </div>
-                            <div class="col-lg-6">
-                                &lt;%&ndash;<div class="panel panel-default">&ndash;%&gt;
-                                <span class="col-lg-2 control-label">是否公开</span>
-                                &lt;%&ndash;col-sm-2 control-label&ndash;%&gt;
-                                <label class="radio-inline">
-                                    <input type="radio" name="isPublic" id="inlineRadio1" value="yes"> 是
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="isPublic" id="inlineRadio2" value="no"> 否
-                                </label>
-                            </div>
-
                         </div>--%>
+                        <div>
                             <div class="input-group">
                                 <span class="input-group-addon">标题</span>
                                 <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
-                                       name="articleTitle" id="articleTitle" placeholder="请输入标题"
-                                       value="${article.articleTitle}" onblur="checkedIsUsed()">
-                            </div>
-                            <%--<div class="form-group">
-                                &lt;%&ndash;<div class="form-group">&ndash;%&gt;
-                                    <label for="department" class="col-sm-1 control-label">部门</label>
-                                        <div class="col-sm-4 " id="department">
-                                            <select class="form-control" name="dId" id="xyz">
-                                                <option>dsjfbhj</option>
-                                                <option>dsjfsdsbhj</option>
-                                            </select>
-                                        </div>
-
-                            </div>--%>
-                            <%--<div class="input-group col-sm-3">
-                                <div class="input-group-addon">
-                                    &lt;%&ndash;<label class="input-group-text" for="inputGroupSelect01">&ndash;%&gt;类别&lt;%&ndash;</label>&ndash;%&gt;
-                                </div>
-                                <select class="form-control custom-select" id="inputGroupSelect01">
-
-                                </select>
-                            </div>--%>
-                            <div class=".container-fluid">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="input-group ">
-                                            <div class="input-group-addon">
-                                                <%--<label class="input-group-text" for="inputGroupSelect01">--%>类别<%--</label>--%>
-                                            </div>
-                                            <select class="form-control custom-select" id="inputGroupSelect01">
-
-                                            </select>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <button class="btn btn-default" type="button" onclick="createNewCategory()">新建分类</button>
-                                    </div>
-                                </div>
+                                       name="articleTitle" id="articleTitle" placeholder="请输入标题,标题不能为空"
+                                <%--value="${article.articleTitle}"--%>  onblur="checkedIsUsed()">
 
                             </div>
+                            <span id="helpBlock2" class="help-block"></span>
+                        </div>
+                        <%--<div class="form-group">
+                            &lt;%&ndash;<div class="form-group">&ndash;%&gt;
+                                <label for="department" class="col-sm-1 control-label">部门</label>
+                                    <div class="col-sm-4 " id="department">
+                                        <select class="form-control" name="dId" id="xyz">
+                                            <option>dsjfbhj</option>
+                                            <option>dsjfsdsbhj</option>
+                                        </select>
+                                    </div>
+
+                        </div>--%>
+                        <div class=".container-fluid">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="input-group ">
+                                        <div class="input-group-addon">
+                                            <%--<label class="input-group-text" for="inputGroupSelect01">--%>类别<%--</label>--%>
+                                        </div>
+                                        <select class="form-control custom-select" id="inputGroupSelect01">
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-default" type="button" onclick="createNewCategory()">新建分类</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
 
                         <%--默认内容--%>
                         <script id="container" name="articleContent" type="text/plain">
-                            ${article.articleContent}
                         </script>
                         <%--<input type="submit" class="btn btn-success" value="发帖">--%>
                     </form>
                     <%--<button class="btn btn-success" onclick="getContent()">获取内容</button>--%>
-                    <button class="btn btn-success" onclick="saveContent()">保存修改</button>
+                    <button class="btn btn-success" onclick="saveContent()">发帖</button>
 
                     <script>
                         function createNewCategory(){
@@ -331,9 +304,6 @@
                             /*console.log(list);*/
                             $.each(list,function(index,ite){
                                 var optionws = $("<option></option>").attr("value",ite.categoryId).append(ite.categoryName);
-                                if(ite.categoryId==${article.articleCategoryid}){
-                                    optionws.attr("selected","selected");
-                                }
                                 optionws.appendTo($("#inputGroupSelect01"));
                                 /*alert(ite.categoryId);*/
                             });
@@ -344,6 +314,9 @@
                             initialFrameHeight:400
                         });
 
+                        /**
+                         * 用作校验标题是否为空
+                         */
                         function checkedIsUsed(){
                             if($("#articleTitle").val()==""){
                                 $("#articleTitle").parent().parent().addClass("has-error");
@@ -354,12 +327,12 @@
                             }
                         }
 
-
                         function getContent(){
-                            ue.execCommand('insertimage', {
+                            /*ue.execCommand('insertimage', {
                                 style: 'max-width:100%'
-                            });
+                            });*/
                             var content = ue.getContent();
+
                             console.log(content.toString());
                             $.ajax({
                                 url:"${pageContext.request.contextPath}/action1",
@@ -382,20 +355,19 @@
                         }
 
                         function saveContent(){
-                            /*ue.execCommand('insertimage', {
-                                style: 'max-width:100%'
-                            });*/
+                            /* ue.execCommand('insertimage', {
+                                 style: 'max-width:100%'
+                             });*/
                             var content = ue.getContent();
                             console.log(content.toString());
                             $.ajax({
-                                url:"${pageContext.request.contextPath}/oneArticle/${article.articleId}",
+                                url:"${pageContext.request.contextPath}/article",
                                 type:"POST",
                                 data: {
                                     "articleTitle": $('#articleTitle').val(),
                                     "articleCategoryid": parseInt($('#inputGroupSelect01 option:selected').val()),
                                     /*"&isPublic="+$('isPublic').value=="yes"?"是":"否"+*/
-                                    "articleContent": content,
-                                    "_method":"PUT"
+                                    "articleContent": content
                                 }
                                 ,
                                 success:function (mes) {

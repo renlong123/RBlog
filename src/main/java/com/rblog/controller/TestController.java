@@ -23,6 +23,7 @@ public class TestController {
     @Autowired
     UserService userService;
 
+/*
     @RequestMapping("/hello")
     public ModelAndView HelloDemo(){
         ModelAndView mav = new ModelAndView("index");
@@ -30,12 +31,8 @@ public class TestController {
         mav.addObject("list",list);
         return mav;
     }
+*/
 
-    @RequestMapping("/person")
-    public ModelAndView person(){
-        ModelAndView mav = new ModelAndView("person_info");
-        return mav;
-    }
 
     @RequestMapping("/test")
     @ResponseBody

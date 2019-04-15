@@ -50,8 +50,8 @@
                 <button type="submit" class="btn btn-default">一键搜索</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">登陆</a></li>
-                <li><a href="#">注册</a></li>
+                <li><a href="${pageContext.request.contextPath}/userLogin">登陆</a></li>
+                <li><a href="${pageContext.request.contextPath}/userRegister">注册</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多 <span class="caret"></span></a>
                     <ul class="dropdown-menu">

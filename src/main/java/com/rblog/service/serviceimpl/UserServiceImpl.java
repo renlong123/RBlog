@@ -16,7 +16,16 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public List<User> selectByExample(UserExample example) {
+    public List<User> selectOneByExample(String username) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andUserNikenameEqualTo(username);
         return userMapper.selectByExample(example);
+    }
+
+    @Override
+    public User selectByPrimaryKey(Integer userId) {
+
+        return userMapper.selectByPrimaryKey(userId);
     }
 }

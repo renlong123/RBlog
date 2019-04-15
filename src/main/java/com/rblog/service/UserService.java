@@ -9,6 +9,8 @@ import java.util.List;
 //@Service
 public interface UserService {
 
-    List<User> selectByExample(UserExample example);
+    List<User> selectOneByExample(String username);
+
+    User selectByPrimaryKey(Integer userId);
 
 }
