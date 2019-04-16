@@ -21,6 +21,41 @@
             margin-top: 70px;
         }*/
     </style>
+    <script>
+        function userLogin() {
+            $.ajax({
+                url:"${pageContext.request.contextPath}/userLogin",
+                type:"POST",
+                data: {
+                    "username":$("#inputcategory").val().trim(),
+                    "password":$("#inputPassword3").val().trim()
+                }
+                ,
+                success:function (mes) {
+                    showResults(mes);
+                },
+                error:function(){
+                    alert("error");
+                }
+            });
+        }
+
+        function showResults(mes) {
+            if(mes==0){
+                $("#helpBlock1").text("用户名不存在");
+                $("#inputcategory").parent().addClass("has-error");
+                /*$("#helpBlock2").text("");
+                $("#inputPassword3").parent().addClass("has-success");*/
+            }else if(mes==1){
+                $("#helpBlock1").text("");
+                $("#inputcategory").parent().addClass("has-success");
+                $("#helpBlock2").text("密码错误");
+                $("#inputPassword3").parent().addClass("has-error");
+            }else{
+                window.location.href="${pageContext.request.contextPath}/welcome.jsp";
+            }
+        }
+    </script>
 </head>
 <body>
 <jsp:include page="navigate.jsp"></jsp:include>
@@ -33,7 +68,7 @@
         <div class="col-xs-4">
 
             <div>
-                <form class="form-horizontal" action="/userLogin" method="post">
+                <%--<form class="form-horizontal" action="/userLogin" method="post">--%>
                     <div style="text-align: center"><font size="22px" style="text-align: center">用户登陆</font></div>
                     <br/>
                     <div class="form-group">
@@ -47,18 +82,21 @@
                         <label for="inputPassword3" class="col-sm-3 control-label">密码</label>
                         <div class="col-sm-9">
                             <input type="password" class="form-control" id="inputPassword3" name="password" placeholder="密码">
+                            <span id="helpBlock2" class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group" style="text-align: center">
-                        <button type="submit" class="btn btn-success" value="">登陆</button>
+                        <button type="submit" class="btn btn-success" value="" onclick="userLogin()">登陆</button>
                         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                         <button class="btn btn-danger" value="" href="${pageContext.request.contextPath}/userRegister">注册</button>
                     </div>
-                </form>
+               <%-- </form>--%>
             </div>
         </div>
     </div>
 </div>
+
+
 
 </body>
 </html>

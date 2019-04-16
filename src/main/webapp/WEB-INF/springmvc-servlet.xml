@@ -34,4 +34,23 @@
     <!--该配置项其实也包含了自动注入上述processor的功能，
     因此当使用 <context:component-scan/> 后，就可以将 <context:annotation-config/> 移除了-->
     <mvc:annotation-driven/>
+
+    <!--配置拦截器，用于验证用户是否登陆-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/userLogin"/>
+            <mvc:exclude-mapping path="/userRegister"/>
+            <mvc:exclude-mapping path="/userRegister/*"/>
+            <mvc:exclude-mapping path="/welcome.jsp"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/fonts/**"/>
+            <mvc:exclude-mapping path="/img/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/utf8-jsp/**"/>
+            <mvc:exclude-mapping path="/selectThree"></mvc:exclude-mapping>
+            <mvc:exclude-mapping path="/category"/>
+            <bean class="com.rblog.intercepter.LoginIntercepter"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

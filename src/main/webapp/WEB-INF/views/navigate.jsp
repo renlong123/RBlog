@@ -6,9 +6,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
+    <script>
+        function confirmquit() {
+            var quitdailog = confirm("确定退出？");
+            if(quitdailog){
+                window.location.href="${pageContext.request.contextPath}/userLoginOut";
+            }
+        }
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -28,8 +37,13 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="${pageContext.request.contextPath}/">首页 <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">热门文章</a></li>
-                <li><a href="#">最新文章</a></li>
+                <li><a href="${pageContext.request.contextPath}/article">热门文章</a></li>
+                <c:if test="${sessionScope.username!=null}">
+                    <li><a href="${pageContext.request.contextPath}/UserName/${sessionScope.username}">个人主页</a></li>
+                </c:if>
+                <c:if test="${sessionScope.username==null}">
+                    <li><a href="${pageContext.request.contextPath}/userLogin">个人主页</a></li>
+                </c:if>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多<span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -50,8 +64,14 @@
                 <button type="submit" class="btn btn-default">一键搜索</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="${pageContext.request.contextPath}/userLogin">登陆</a></li>
-                <li><a href="${pageContext.request.contextPath}/userRegister">注册</a></li>
+                <c:if test="${sessionScope.username!=null}">
+                    <li><a href="${pageContext.request.contextPath}/UserName/${sessionScope.username}">${sessionScope.username}</a></li>
+                    <li><a href="#" onclick="confirmquit()">退出</a></li>
+                </c:if>
+                <c:if test="${sessionScope.username==null}">
+                    <li><a href="${pageContext.request.contextPath}/userLogin">登陆</a></li>
+                    <li><a href="${pageContext.request.contextPath}/userRegister">注册</a></li>
+                </c:if>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多 <span class="caret"></span></a>
                     <ul class="dropdown-menu">

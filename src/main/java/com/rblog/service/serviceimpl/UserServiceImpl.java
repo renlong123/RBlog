@@ -28,4 +28,12 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.selectByPrimaryKey(userId);
     }
+
+    @Override
+    public long countByExample(String username) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andUserNikenameEqualTo(username);
+        return userMapper.countByExample(example);
+    }
 }
