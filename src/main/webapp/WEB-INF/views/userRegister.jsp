@@ -47,6 +47,23 @@
                 $("#helpBlock1").parent().addClass("has-error");
             }
         }
+        function userRegister() {
+
+            $.ajax({
+                url:"${pageContext.request.contextPath}/userRegister",
+                type:"POST",
+                data:{
+                    "userNikename":$("#inputcategory").val().trim(),
+                    "userRealname":$("#inputrealname").val().trim(),
+                    "userPassword":$("#inputPassword30").val().trim(),
+                    "userGender":$('input:radio[name="userGender"]:checked').val().trim(),
+                    "userEmail":$("#useremail").val().trim()
+                },
+                success:function (mes) {
+                    alert(mes);
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -58,12 +75,8 @@
             <img src="${pageContext.request.contextPath}/img/007.jpg" style="width: 100%">
         </div>
         <div class="col-xs-4">
-
             <div>
                 <div style="text-align: center">用户注册</div>
-                <%--<form class="form-horizontal" action="/userLogin" method="post">--%>
-                <%--<div style="text-align: center"><font size="18px" style="text-align: center">用户注册</font></div>
-                <br/>--%>
                 <div class="form-group">
                     <label for="inputcategory" class="col-sm-3 control-label">用户名</label>
                     <div class="col-sm-9">
@@ -73,12 +86,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputrealname" class="col-sm-3 control-label">真实姓名</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" name="username" id="inputrealname" placeholder="真实姓名不能为空">
-                        <span id="helpBlock2" class="help-block"></span>
-                    </div>
+                <label for="inputrealname" class="col-sm-3 control-label">真实姓名</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="username" id="inputrealname" placeholder="真实姓名不能为空">
+                    <span id="helpBlock2" class="help-block"></span>
                 </div>
+            </div>
                 <div class="form-group">
                     <label for="inputPassword30" class="col-sm-3 control-label">密码</label>
                     <div class="col-sm-9">
@@ -112,7 +125,7 @@
                     </div>
                 </div>
                 <div class="form-group" style="text-align: center">
-                    <button class="btn btn-danger btn-block" style="margin: auto">一键注册</button>
+                    <button class="btn btn-danger btn-block" style="margin: auto" onclick="userRegister()">一键注册</button>
                 </div>
                 <%-- </form>--%>
             </div>

@@ -6,24 +6,23 @@
   Time: 17:26
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
-    <title>haha</title>
+    <meta charset="UTF-8">
+    <title>RBlog 个人信息</title>
+    <!--图标-->
+    <link href="${pageContext.request.contextPath}/img/title.png" rel="shortcut icon"/>
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.2.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <table>
-        <c:forEach items="${list}" var="useri">
-            <tr>
-                <td>${useri.userId}</td>
-                <td>${useri.userNikename}</td>
-                <td>${useri.userDescription}</td>
-                <td>${useri.userEmail}</td>
-                <td>${useri.userPassword}</td>
-                <td>${useri.userGender==1?"男":"女"}</td>
-            </tr>
-        </c:forEach>
-    </table>
+
+
+                <img src="${pageContext.request.contextPath}/img/saves/${user}" alt="null">
+
+
 
 </body>
 </html>

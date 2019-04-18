@@ -25,6 +25,13 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
 
+    <!--上传图片功能-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="maxInMemorySize" value="10240"/>
+        <property name="maxUploadSize" value="-1"></property>
+    </bean>
+
     <!--在springMVC-servlet.xml中配置<mvc:default-servlet-handler />后，
     会在Spring MVC上下文中定义一个org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler，
     它会像一个检查员，对进入DispatcherServlet的URL进行筛查，如果发现是静态资源的请求，

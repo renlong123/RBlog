@@ -36,4 +36,17 @@ public class UserServiceImpl implements UserService {
         criteria.andUserNikenameEqualTo(username);
         return userMapper.countByExample(example);
     }
+
+    @Override
+    public int save(User user) {
+        return userMapper.insertSelective(user);
+    }
+
+    @Override
+    public int updateByExampleSelective(User record) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andUserNikenameEqualTo(record.getUserNikename());
+        return userMapper.updateByExampleSelective(record,example);
+    }
 }

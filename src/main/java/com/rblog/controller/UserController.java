@@ -5,6 +5,7 @@ import com.rblog.service.UserService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,10 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 @Controller
 public class UserController {
@@ -25,8 +32,13 @@ public class UserController {
 
 
     @RequestMapping("/person")
-    public ModelAndView person(){
-        ModelAndView mav = new ModelAndView("person_info");
+    public ModelAndView person(HttpSession session){
+        ModelAndView mav = null;
+        if(session.getAttribute("username")!=null){
+            mav = new ModelAndView("person_info");
+        }else{
+            mav = new ModelAndView("userLogin");
+        }
         return mav;
     }
 
@@ -45,6 +57,12 @@ public class UserController {
         return mav;
     }
 
+/*    @ResponseBody
+    @RequestMapping("/User")
+    public ModelAndView selectUser(HttpSession session){
+
+    }*/
+
     /**
      * 根据用户名字获取用户信息
      * @param username
@@ -52,9 +70,10 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/UserName/{username}",method = RequestMethod.GET)
-    public ModelAndView getUserByName(@PathVariable("username") String username){
+    public ModelAndView getUserByName(@PathVariable("username") String username,HttpSession session){
         ModelAndView mav = new ModelAndView("person_info");
-        List<User> user = userService.selectOneByExample(username);
+
+        List<User> user = userService.selectOneByExample(username==null? (String) session.getAttribute("username") :username);
         mav.addObject("user",user.isEmpty()?null:user.get(0));
         /*System.out.println(user);*/
         return mav;
@@ -102,4 +121,34 @@ public class UserController {
         return "redirect:welcome.jsp";
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/userRegister",method = RequestMethod.POST)
+    public String userRegister(User user){
+        /*user.setUserNikename("toud");*/
+        Date now = new Date();
+        user.setUserRegisterdate(now);
+        int result = userService.save(user);
+        return Integer.toString(result);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
+    public String updateUser(User user, HttpServletRequest request) throws IOException {
+        System.out.println(user.toString());
+        String name = UUID.randomUUID().toString().replaceAll("-","") +".jpg";
+        String absolutePath = "C:\\Users\\renlong\\IdeaProjects\\RBlog\\target\\RBlog\\img\\saves";
+        //String fileSavePath = request.getServletContext().getRealPath("/img/saves/");
+        File f = new File(absolutePath,name);
+        f.getParentFile().mkdirs();
+        if(user.getFile()!=null) {
+            user.getFile().transferTo(f);
+        }else{
+            System.out.println("没获取到图片");
+        }
+        user.setUserHeadportait(name);
+        userService.updateByExampleSelective(user);
+        System.out.println(user.getUserNikename());
+        return "redirect:person";
+    }
 }

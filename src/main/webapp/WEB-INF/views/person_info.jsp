@@ -5,7 +5,8 @@
   Time: 22:09
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -63,29 +64,40 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">新建分类</h4>
+                <h4 class="modal-title" id="myModalLabel">修改用户</h4>
             </div>
             <div class="modal-body" id="articledesc">
-                <form class="form-horizontal">
+                <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/updateUser" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="inputcategory" class="col-sm-2 control-label">分类名</label>
+                        <label for="inputcategory" class="col-sm-2 control-label">用户名</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" onblur="checkIsUnic()" id="inputcategory" placeholder="分类名,不能为空且不能重复">
-                            <span id="helpBlock1" class="help-block"></span>
-                        </div>
-
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">描述</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputPassword3" placeholder="描述">
+                            <input type="text" class="form-control" readonly="readonly" name="userNikename" id="inputcategory" value="${sessionScope.username}">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="userRealname" id="inputPassword2" placeholder="描述">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">邮箱</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="userEmail" id="inputPassword3" placeholder="描述">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">头像</label>
+                        <div class="col-sm-10">
+                            <input type="file"  name="file" id="inputPassword4" accept="image/*"/>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="newcategoryreal1">新建</button>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" id="newcategoryreal" onclick="newcategoryreal()">新建</button>
+                <button type="submit" class="btn btn-primary" id="newcategoryreal" onclick="/*newcategoryreal()*/">新建</button>
             </div>
         </div>
     </div>
@@ -98,7 +110,6 @@
         <div class="row">
 <%--            <link href="https://v4.bootcss.com/docs/4.0/examples/dashboard/dashboard.css" rel="stylesheet">--%>
             <nav class="col-sm-2 sidebar">
-
                 <div class="panel panel-success">
                     <div class="panel-heading" style="text-align: center">个人信息</div>
                     <div class="panel-body" style="margin: 0px">
@@ -141,26 +152,26 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div style="">
-                                    <img src="${pageContext.request.contextPath}/img/006.jpg" style="width: 100%;opacity:0.5">
+                                    <img src="${pageContext.request.contextPath}/img/005.jpg" style="width: 100%;opacity:0.5">
                                 </div>
                                 <%--<table class="table table-bordered" width="90%" style="float: bottom">--%>
                             </div>
                         </div>
                         <div class="panel panel-success">
                             <div class="panel-heading">
-                                <a href="#" style="float: right;">修改</a>
+                                <a href="#" style="float: right;" onclick="changeUser('${sessionScope.username}')">修改</a>
                             </div>
                             <div class="panel-body">
                                 <div class=".container-fluid">
                                     <div class="row">
                                         <div class="col-xs-6">
                                             <div style="font-size: 30px" style="float: bottom">
-                                                ${user.userNikename}
+                                                ${sessionScope.username}
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
                                             <div style="height: 100px;width: 100px;float: right;border: #449d44;border-width: 3px">
-                                                <img src="${pageContext.request.contextPath}/img/005.jpg" style="height: 100px;width: 100px;">
+                                                <img src="${pageContext.request.contextPath}/img/saves/${user.userHeadportait}" style="height: 100px;width: 100px;">
                                             </div>
                                         </div>
                                     </div>
@@ -179,20 +190,20 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xs-12">${user.userDescription}</div>
+                                        <div class="col-xs-12">${sessionScope.userDescription}</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-3">
                                             真实姓名
                                         </div>
                                         <div class="col-xs-3">
-                                            ${user.userRealname}
+                                            ${sessionScope.userRealname}
                                         </div>
                                         <div class="col-xs-3">
                                             邮箱
                                         </div>
                                         <div class="col-xs-3">
-                                            ${user.userEmail}
+                                            ${sessionScope.userEmail}
                                         </div>
                                     </div>
                                     <div class="row">
@@ -200,13 +211,13 @@
                                             性别
                                         </div>
                                         <div class="col-xs-3">
-                                            ${user.userGender}
+                                            ${sessionScope.userGender==1?"男":"女"}
                                         </div>
                                         <div class="col-xs-3">
                                             注册时间
                                         </div>
                                         <div class="col-xs-3">
-                                            ${user.userRegisterdate}
+                                            ${sessionScope.userRegisterdate}
                                         </div>
                                     </div>
                                 </div>
@@ -263,6 +274,24 @@
                                         .append($("<hr/>"));
                                 });
                             }
+
+                            function changeUser(username) {
+                                $.ajax({
+                                    url:"${pageContext.request.contextPath}/UserName/"+username,
+                                    type:"GET",
+                                    success:function (data) {
+                                        showData1(data);
+                                    },
+                                    error:function(){
+                                        alert("error");
+                                    }
+                                });
+                            }
+
+                            function showData1(data) {
+                                $("#myModal").modal();
+                            }
+
 
                             /*文档加载完成后立刻查询用户信息*/
                             /*function addUserinfo(userId){

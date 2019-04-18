@@ -125,14 +125,7 @@
                                     <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
                                     <a href="${pageContext.request.contextPath}/categoryjump">分类列表</a></div>
                                 <div></div>
-                            <%--<li class="item-content"><a href="#">我的信息</a></li>
-                            <div></div>
-                            <li class="item-content"><a href="#">我的信息</a></li>
-                            <hr/>
-                            <li class="item-content"><a href="#">我的信息</a></li>
-                            <li class="item-content"><a href="#">我的信息</a></li>--%>
-                            <%--</ul>--%>
-                        </div>
+                         </div>
                     </div>
                 </nav>
         </div>

@@ -2,6 +2,7 @@ package com.rblog.service;
 
 import com.rblog.bean.User;
 import com.rblog.bean.UserExample;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,4 +16,7 @@ public interface UserService {
 
     long countByExample(String username);
 
+    int save(User user);
+
+    int updateByExampleSelective(@Param("record") User record);
 }

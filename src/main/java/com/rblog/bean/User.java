@@ -1,5 +1,7 @@
 package com.rblog.bean;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Date;
 
 public class User {
@@ -22,6 +24,16 @@ public class User {
     private String userBackgroundpic;
 
     private String userDescription;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    private MultipartFile file;
 
     public Integer getUserId() {
         return userId;
