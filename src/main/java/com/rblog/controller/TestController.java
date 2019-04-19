@@ -57,7 +57,6 @@ public class TestController {
         articles.add(article);
         mav.addObject("articles",articles);
         System.out.println(articles);
-
         return mav;
     }
 }

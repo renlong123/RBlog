@@ -72,11 +72,32 @@ public class UserController {
     @RequestMapping(value = "/UserName/{username}",method = RequestMethod.GET)
     public ModelAndView getUserByName(@PathVariable("username") String username,HttpSession session){
         ModelAndView mav = new ModelAndView("person_info");
-
         List<User> user = userService.selectOneByExample(username==null? (String) session.getAttribute("username") :username);
         mav.addObject("user",user.isEmpty()?null:user.get(0));
         /*System.out.println(user);*/
         return mav;
+    }
+
+    /**
+     * 根据用户名字获取用户信息,没有名字时从session获取名字
+     * @param session
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/UserName",method = RequestMethod.GET)
+    public ModelAndView getUserByName(HttpSession session){
+        ModelAndView mav = new ModelAndView("person_info");
+        String username = (String) session.getAttribute("username");
+
+        if(username==null){
+            mav.addObject("user",null);
+            return mav;
+        }else{
+            List<User> user = userService.selectOneByExample(username);
+            mav.addObject("user",user.isEmpty()?null:user.get(0));
+            return mav;
+        }
+
     }
 
     @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
@@ -132,7 +153,6 @@ public class UserController {
         return Integer.toString(result);
     }
 
-    @ResponseBody
     @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
     public String updateUser(User user, HttpServletRequest request) throws IOException {
         System.out.println(user.toString());
@@ -148,7 +168,7 @@ public class UserController {
         }
         user.setUserHeadportait(name);
         userService.updateByExampleSelective(user);
-        System.out.println(user.getUserNikename());
-        return "redirect:person";
+
+        return "redirect:/UserName";
     }
 }
